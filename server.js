@@ -16,6 +16,10 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const landingRoutes = require("./routes/landing");
+const noPageRoutes = require("./routes/noPage");
+const voterResultRoutes = requrie("./routes/voterResults");
+const voterVotingRoutes = require("./routes/voterVoting");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -46,3 +50,4 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
