@@ -16,10 +16,14 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const sharedFunctions = require ("./route/sharedFunctions");
 const landingRoutes = require("./routes/landing");
+const adminPollRoutes = requrie ("./routes/adminPoll");
 const noPageRoutes = require("./routes/noPage");
-const voterResultRoutes = requrie("./routes/voterResults");
+const voterResultRoutes = requrie("./routes/voterResult");
 const voterVotingRoutes = require("./routes/voterVoting");
+const pollSetupTYRoutes = require("./routes/pollSetupTY");
+const votingTYRoutes = require ("./routes/votingTY");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -41,6 +45,7 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
+app.use("/api/sharedFunctions", usersRoutes(sharedFunctions));
 
 // Home page
 app.get("/", (req, res) => {
