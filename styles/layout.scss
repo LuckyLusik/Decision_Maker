@@ -1,7 +1,90 @@
+$logo-color: #55BCC9;
+$form-background-color: #97CAEF;
+$backcolor-background-color: #CAFAFE;
+$redhover-background-color: #FC4445;
+
 body {
-  background-color: #EEE;
+  background-color: $backcolor-background-color;
+  font-family: 'Muli', sans-serif;
 
   h1 {
-    color: #244751;
+    color: $logo-color;
+    font-weight: 900;
+    font-size: 5em;
+    margin: 0;
   }
+
+  .holder {
+    width: 60%;
+    margin: auto;
+    padding: 1em 0 0 0;
+  }
+
+  .logo {
+    height: 90px;
+    width: 90px;
+  }
+
+  .main_descrip {
+    font-size: 2em;
+    text-align: center;
+    margin: 1em 0 0 0;
+  }
+
+  .top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+
+  .formSub {
+    background-color: $form-background-color;
+    padding: 2em;
+    margin: 2em 0;
+    font-size: 1.1em;
+
+      textarea {
+        resize: none;
+      }
+
+      button {
+        width: 10em;
+        font-size: 2em;
+        transition: all 0.5s ease;
+        background-color: $logo-color;
+        font-weight: 700;
+        color: white;
+      }
+
+      button:hover {
+        background-color: $redhover-background-color;
+        color: white;
+      }
+
+      .info {
+        font-size: 1.2em;
+        margin: 0 0 1em 0;
+        color: white;
+      }
+
+      .add-choice button {
+        background-color: $backcolor-background-color;
+        width: 10em;
+        font-size: 1.1em;
+        color: black;
+        transition: all 0.5s ease;
+      }
+
+      .add-choice button:hover {
+        background-color: $redhover-background-color;
+      }
+  }
+
+
+
+
 }
+
+
