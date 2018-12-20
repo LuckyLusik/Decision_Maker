@@ -4,9 +4,9 @@ exports.up = function(knex, Promise) {
     table.increments('id');
     table.string('title');
     table.string('description');
-    table.datetime('startDate');
-    table.datetime('endDate');
-    table.integer('creatorId').references('id').inTable('pollCreator');
+    table.datetime('start_date');
+    table.datetime('end_date');
+    table.integer('creator_id').references('id').inTable('poll_creator');
 
   });
 };

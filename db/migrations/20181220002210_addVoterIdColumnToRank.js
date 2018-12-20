@@ -1,12 +1,12 @@
 
 exports.up = function(knex, Promise) {
    return knex.schema.table('rank', function (table) {
-    table.integer('voterId').references('id').inTable('pollVoter');
+    table.integer('voter_id').references('id').inTable('poll_voter');
   });
 };
 
 exports.down = function(knex, Promise) {
   return knex.schema.table('rank', function (table) {
-    table.dropColumn('voterId');
+    table.dropColumn('voter_id');
   });
 };

@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments('id');
     table.string('title');
     table.string('description');
-    table.integer('pollId').references('id').inTable('poll');
+    table.integer('poll_id').references('id').inTable('poll');
 
   });
 };
