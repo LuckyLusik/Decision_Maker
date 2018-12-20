@@ -21,11 +21,46 @@
     <section class="holder">
       <%- include partials/_header.ejs %>
 
-    <section class="main_descrip">
-      <p>Welcome to ##'s Poll Page!</p>
+      <section class="main_descrip">
+        <p>Welcome to ##'s Poll Page!</p>
+      </section>
+      <section class="vote-descr">
+        <h3>Poll Title</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </section>
+      <section class="expire">
+        <h3>Expire in ##</h3>
+      </section>
+      <form method="GET" class="form-horizontal formSub" action="/">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="voter-name">Name:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="voter-name" placeholder="Enter your name">
+          </div>
+        </div>
+        <hr>
+        <div class="form-group row">
+        <div class="col-md-12">
+          <h4>Choice 1:</h4>
+          <h5>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+          </h5>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+          <div class="vote-rank center">
+            <button type="button" class="">1</button>
+            <button type="button" class="">2</button>
+            <button type="button" class="">3</button>
+            <button type="button" class="">4</button>
+            <button type="button" class="">5</button>
+          </div>
+          <hr>
+        </div>
+      </form>
     </section>
 
-    </section>
+
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>

@@ -24,27 +24,27 @@
     <section class="main_descrip">
       <p>Let's make a decision together!</p>
     </section>
-    <form method="GET" class="form-horizontal formSub" action="/">
+    <form method="GET" id="poll-info" class="form-horizontal formSub" action="/">
       <div class="info"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div>
       <div class="form-group row">
         <div class="col-md-5">
           <label for="name">Name:</label>
-          <input class="form-control" id="md1" type="text" placeholder="Enter your name">
+          <input class="form-control" id="name-adm" type="text" placeholder="Enter your name">
         </div>
         <div class="col-md-7">
           <label for="email">Email:</label>
-          <input class="form-control" id="md2" type="text" placeholder="Enter your email">
+          <input class="form-control" id="email-admin" type="text" placeholder="Enter your email">
         </div>
       </div>
       <hr>
       <div class="form-group row">
         <div class="col-md-4">
           <label for="date">End Date:</label>
-          <input class="form-control" id="md1" type="text" placeholder="YYYY/MM/DD">
+          <input class="form-control" id="end-date" type="text" placeholder="YYYY/MM/DD">
         </div>
         <div class="col-md-4">
           <label for="time">End Time:</label>
-          <input class="form-control" id="md2" type="text" placeholder="HH/MM">
+          <input class="form-control" id="end-time" type="text" placeholder="HH/MM">
         </div>
         <div class="col-md-4">
           <label for="ampm">Choose AM or PM:</label>
@@ -57,13 +57,13 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="polltitle">Poll Title:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="choice1" placeholder="Enter poll title">
+          <input type="text" class="form-control" id="poll-title" placeholder="Enter poll title">
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="poll"></label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="polldes" placeholder="Enter description for this poll (150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="poll-des" placeholder="Enter description for this poll (150 symbols max)"></textarea>
         </div>
       </div>
 
@@ -75,19 +75,19 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2" for="choice2"></label>
+        <label class="control-label col-sm-2" for="descr1"></label>
         <div class="col-sm-10">
           <textarea type="text" class="form-control" id="descr1" placeholder="Enter description for choice #1 (optional, 150 symbols max)"></textarea>
         </div>
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2" for="choice">Choice 2:</label>
+        <label class="control-label col-sm-2" for="choice2">Choice 2:</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="choice2" placeholder="Enter choice #2">
         </div>
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2" for="choice"></label>
+        <label class="control-label col-sm-2" for="descr2"></label>
         <div class="col-sm-10">
           <textarea type="text" class="form-control" id="descr2" placeholder="Enter description for choice #2 (optional, 150 symbols max)"></textarea>
         </div>
@@ -108,7 +108,7 @@
     </div>
     <div class="newchoice4">
       <div class="form-group">
-        <label class="control-label col-sm-2" for="choice">Choice 4:</label>
+        <label class="control-label col-sm-2" for="choice4">Choice 4:</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="choice4" placeholder="Enter choice #4">
         </div>
@@ -122,7 +122,7 @@
     </div>
     <div class="newchoice5">
       <div class="form-group">
-        <label class="control-label col-sm-2" for="choice">Choice 5:</label>
+        <label class="control-label col-sm-2" for="choice5">Choice 5:</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="choice5" placeholder="Enter choice #5">
         </div>
@@ -130,7 +130,7 @@
       <div class="form-group">
         <label class="control-label col-sm-2 remove" id="rem5" for="choice">Remove Choice 5</label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="descr4" placeholder="Enter description for choice #5 (optional, 150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="descr5" placeholder="Enter description for choice #5 (optional, 150 symbols max)"></textarea>
         </div>
       </div>
     </div>

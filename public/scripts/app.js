@@ -28,7 +28,6 @@ $(document).ready(function() {
           $(".newchoice5").slideDown("slow");
           $("#rem4").css('visibility', 'hidden');
           addChoice += 1;
-        } else {
           $("#addchoice").attr("disabled", "disabled");
         }
       }
