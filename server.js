@@ -15,7 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
-//OLD const usersRoutes = require("./routes/users");
+const usersRoutes = require("./routes/users");
 const sharedFunctions = require ("./lib/sharedFunctions")(knex);
 const landingRoutes = require("./routes/landing")(sharedFunctions);
 const pollAdminRoutes = requrie ("./routes/pollAdmin")(sharedFunctions);
@@ -44,8 +44,8 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-//OLD app.use("/api/users", usersRoutes(knex));
-app.use("/", landingRoutes);
+app.use("/api/users", usersRoutes(knex)); //remounted to test login page
+// commented out for testing app.use("/", landingRoutes);
 app.use("/pollAdmin", pollAdminRoutes);
 app.use("/noPageRoutes", noPageRoutes);
 app.use("/voterResult", voterResultRoutes);
