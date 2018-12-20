@@ -49,6 +49,10 @@ body {
         resize: none;
       }
 
+      textarea:focus {
+        border-color: black;
+      }
+
       button {
         width: 10em;
         font-size: 2em;
@@ -56,6 +60,7 @@ body {
         background-color: $logo-color;
         font-weight: 700;
         color: white;
+        outline: none;
       }
 
       button:hover {
@@ -75,10 +80,37 @@ body {
         font-size: 1.1em;
         color: black;
         transition: all 0.5s ease;
+        outline: none;
       }
 
       .add-choice button:hover {
         background-color: $redhover-background-color;
+      }
+
+      input:focus {
+        border-color: black;
+      }
+
+      .newchoice3 {
+        display: none;
+      }
+
+      .newchoice4 {
+        display: none;
+      }
+
+      .newchoice5 {
+        display: none;
+      }
+
+      label.remove {
+        color: $redhover-background-color;
+        cursor: pointer;
+        transition: all 0.5s ease;
+      }
+
+      label.remove:hover {
+        color: white;
       }
   }
 
