@@ -58,6 +58,10 @@ app.use("/votingTYRoutes", votingTYRoutes);
 // Home page
 
 
+app.get("/vote", (req, res) => {
+  res.render("voting");
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
