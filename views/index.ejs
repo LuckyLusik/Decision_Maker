@@ -24,19 +24,36 @@
     <section class="main_descrip">
       <p>Let's make a decision together!</p>
     </section>
-    <form class="form-horizontal formSub" action="/">
+    <form method="GET" class="form-horizontal formSub" action="/">
       <div class="info"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div>
       <div class="form-group row">
         <div class="col-md-5">
-          <label for="name">Name</label>
+          <label for="name">Name:</label>
           <input class="form-control" id="md1" type="text" placeholder="Enter your name">
         </div>
         <div class="col-md-7">
-          <label for="email">Email</label>
+          <label for="email">Email:</label>
           <input class="form-control" id="md2" type="text" placeholder="Enter your email">
         </div>
       </div>
       <hr>
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label for="date">End Date:</label>
+          <input class="form-control" id="md1" type="text" placeholder="YYYY/MM/DD">
+        </div>
+        <div class="col-md-4">
+          <label for="time">End Time:</label>
+          <input class="form-control" id="md2" type="text" placeholder="HH/MM">
+        </div>
+        <div class="col-md-4">
+          <label for="ampm">Choose AM or PM:</label>
+          <select class="form-control" id="ampm" name="ampm">
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+          </select>
+        </div>
+      </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="polltitle">Poll Title:</label>
         <div class="col-sm-10">
@@ -49,18 +66,7 @@
           <textarea type="text" class="form-control" id="polldes" placeholder="Enter description for this poll (150 symbols max)"></textarea>
         </div>
       </div>
-      <div class="form-group">
-        <label class="control-label col-sm-2" for="time">Time:</label>
-        <div class="col-sm-4">
-          <input type="text" class="form-control" id="timeexp" placeholder="Enter time"></input>
-        </div>
-        <div class="col-sm-4">
-          <select id="country" name="country">
-            <option value="hours">Hours</option>
-            <option value="minutes">Minutes</option>
-          </select>
-        </div>
-      </div>
+
       <hr>
       <div class="form-group">
         <label class="control-label col-sm-2" for="choice1">Choice 1:</label>
@@ -86,9 +92,51 @@
           <textarea type="text" class="form-control" id="descr2" placeholder="Enter description for choice #2 (optional, 150 symbols max)"></textarea>
         </div>
       </div>
+      <div class="newchoice3">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="choice">Choice 3:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="choice3" placeholder="Enter choice #3">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2 remove" id="rem3" for="choice">Remove Choice 3</label>
+        <div class="col-sm-10">
+          <textarea type="text" class="form-control" id="descr3" placeholder="Enter description for choice #3 (optional, 150 symbols max)"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="newchoice4">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="choice">Choice 4:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="choice4" placeholder="Enter choice #4">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2 remove" id="rem4" for="choice">Remove Choice 4</label>
+        <div class="col-sm-10">
+          <textarea type="text" class="form-control" id="descr4" placeholder="Enter description for choice #4 (optional, 150 symbols max)"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="newchoice5">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="choice">Choice 5:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="choice5" placeholder="Enter choice #5">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2 remove" id="rem5" for="choice">Remove Choice 5</label>
+        <div class="col-sm-10">
+          <textarea type="text" class="form-control" id="descr4" placeholder="Enter description for choice #5 (optional, 150 symbols max)"></textarea>
+        </div>
+      </div>
+    </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10 add-choice" >
-          <button type="" class="btn btn-default">Add choice</button>
+          <button id="addchoice" type="button" class="btn btn-default">Add choice</button>
         </div>
       </div>
       <hr>
