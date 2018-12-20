@@ -19,10 +19,19 @@ module.exports = (knex) => {
         - Create shortened path link
         - puts poll details into psql via knex
         - send email
+        - objectionCreationAdmin is a callback function in sharedFunctions 
         */
-        sharedFunctions.objectCreationAdmin (req.body.adminName, req.body.adminEmail, urlString,req.body.pollTitle, req.body.pollDescription, req.body.choiceTitle, req.body.choiceDescription, req.body.endData)
+        const pollAdminObject = sharedFunctions.dataValidationAdmin (req.body.adminName, req.body.adminEmail, req.body.pollTitle, req.body.pollDescription, req.body.choiceTitle, req.body.choiceDescription, req.body.endData, requireName, objectCreationAdmin)
+        
+        var didInsertWork = pushAdminDetails(pollAdminObject);
 
-        res.redirect ('/pollSetupTY');
+        if (didInsertWork){
+            res.redirect ('/pollSetupTY');
+        } else {
+            res.json("Something went wrong. Please try to submit your poll again")
+        }
+        
+        
     });
 
 
