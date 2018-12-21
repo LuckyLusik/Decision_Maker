@@ -32,13 +32,12 @@ module.exports = (sharedFunctions, knex) => {
                 console.log('DID IT FAIL?')
                 } else {
                     console.log('It passed check')
-                    const startDate = Math.floor(new Date().getTime())
-                    const endDate = `${body.endDate} ${body.endHour} ${body.endAmPm}`
+                    const startDate = moment(new Date()).format("YYYY-MM-DD hh:mm a");
+                    const endDate = `${body.endDate} ${body.endHour} ${body.endAmPm}`;
                     console.log('startDate', startDate, 'endDate', typeof(body.endDate), body.endDate, 'time', typeof(body.endHour), body.endHour);
-                    const epochtimeEnd = sharedFunctions.sumTime(endDate)
                     const urlString = sharedFunctions.urlString();
                     const pollCreatorInfo = [{ name: body.name, email: body.email}];
-                    const pollInfo = [{title: body.pollTitle, description: body.pollDescription, start_date: startDate, end_date: epochtimeEnd}]; //TO-DO : add , id_url: urlString, requireName back into pollInfo
+                    const pollInfo = {title: body.pollTitle, description: body.pollDescription, start_date: startDate, end_date: endDate}; //TO-DO : add , id_url: urlString, requireName back into pollInfo
                     const choiceInfo    = [body.choice1, body.choice2, body.choice3, body.choice4, body.choice5]
                     const choiceDescription   = [body.choiceDescription1, body.choiceDescription2, body.choiceDescription3, body.choiceDescription4, 
                     body.choiceDescription5]
@@ -61,14 +60,17 @@ module.exports = (sharedFunctions, knex) => {
                     })
                     */ 
                     console.log("Before processing")
-                    const poll = await knex('poll')
-                        .insert(pollInfo)
-                        .returning('id')
-                    const creator = await knex('creator')
+                    const [creator_id] = await knex('poll_creator')
                         .insert(pollCreatorInfo)
                         .returning('id')
+                        //OLD console.log(creator)
+                    pollInfo.creator_id = creator_id
+                    const [poll_id] = await knex('poll')
+                        .insert(pollInfo)
+                        .returning('id')
+                    choiceArray.forEach(c => c['poll_id'] = poll_id)
                     const choice = await knex('choice')
-                        .insert(choiceInfo)
+                        .insert(choiceArray)
                         .returning('id') //TO-DO, how do I return an ID to push the choice title ids?
                 }
             }
