@@ -24,31 +24,31 @@
     <section class="main_descrip">
       <p>Let's make a decision together!</p>
     </section>
-    <form method="GET" id="poll-info" class="form-horizontal formSub" action="/">
+    <form method="POST" id="poll-info" class="form-horizontal formSub" action="/">
       <div class="info"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div>
       <div class="form-group row">
         <div class="col-md-5">
           <label for="name">Name:</label>
-          <input class="form-control" id="name-adm" type="text" placeholder="Enter your name">
+          <input class="form-control" id="name-adm" type="text" placeholder="Enter your name" name="name">
         </div>
         <div class="col-md-7">
           <label for="email">Email:</label>
-          <input class="form-control" id="email-admin" type="text" placeholder="Enter your email">
+          <input class="form-control" id="email-admin" type="text" placeholder="Enter your email" name="email">
         </div>
       </div>
       <hr>
       <div class="form-group row">
         <div class="col-md-4">
           <label for="date">End Date:</label>
-          <input class="form-control" id="end-date" type="text" placeholder="YYYY/MM/DD">
+          <input class="form-control" id="end-date" type="text" placeholder="YYYY/MM/DD" name="endDate">
         </div>
         <div class="col-md-4">
           <label for="time">End Time:</label>
-          <input class="form-control" id="end-time" type="text" placeholder="HH/MM">
+          <input class="form-control" id="end-time" type="text" placeholder="HH/MM" name="endHour">
         </div>
         <div class="col-md-4">
           <label for="ampm">Choose AM or PM:</label>
-          <select class="form-control" id="ampm" name="ampm">
+          <select class="form-control" id="ampm" name="endAmPm">
             <option value="am">AM</option>
             <option value="pm">PM</option>
           </select>
@@ -57,13 +57,13 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="polltitle">Poll Title:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="poll-title" placeholder="Enter poll title">
+          <input type="text" class="form-control" id="poll-title" placeholder="Enter poll title" name="pollTitle">
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="poll"></label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="poll-des" placeholder="Enter description for this poll (150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="poll-des" placeholder="Enter description for this poll (150 symbols max)" name="pollDescription"></textarea>
         </div>
       </div>
 
@@ -71,38 +71,38 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="choice1">Choice 1:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="choice1" placeholder="Enter choice #1">
+          <input type="text" class="form-control" id="choice1" placeholder="Enter choice #1" name="choiceOne">
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="descr1"></label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="descr1" placeholder="Enter description for choice #1 (optional, 150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="descr1" placeholder="Enter description for choice #1 (optional, 150 symbols max)" name="choiceDescriptionOne"></textarea>
         </div>
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2" for="choice2">Choice 2:</label>
+        <label class="control-label col-sm-2" for="choice2" >Choice 2:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="choice2" placeholder="Enter choice #2">
+          <input type="text" class="form-control" id="choice2" placeholder="Enter choice #2" name="choiceTwo">
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="descr2"></label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="descr2" placeholder="Enter description for choice #2 (optional, 150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="descr2" placeholder="Enter description for choice #2 (optional, 150 symbols max)" name="choiceDescriptionTwo"></textarea>
         </div>
       </div>
       <div class="newchoice3">
       <div class="form-group">
         <label class="control-label col-sm-2" for="choice">Choice 3:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="choice3" placeholder="Enter choice #3">
+          <input type="text" class="form-control" id="choice3" placeholder="Enter choice #3" name="choiceThree">
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2 remove" id="rem3" for="choice">Remove Choice 3</label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="descr3" placeholder="Enter description for choice #3 (optional, 150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="descr3" placeholder="Enter description for choice #3 (optional, 150 symbols max)" name="choiceDescriptionThree"></textarea>
         </div>
       </div>
     </div>
@@ -110,13 +110,13 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="choice4">Choice 4:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="choice4" placeholder="Enter choice #4">
+          <input type="text" class="form-control" id="choice4" placeholder="Enter choice #4" name="choiceFour">
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2 remove" id="rem4" for="choice">Remove Choice 4</label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="descr4" placeholder="Enter description for choice #4 (optional, 150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="descr4" placeholder="Enter description for choice #4 (optional, 150 symbols max)" name="choiceDescriptionFour"></textarea>
         </div>
       </div>
     </div>
@@ -124,13 +124,13 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="choice5">Choice 5:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="choice5" placeholder="Enter choice #5">
+          <input type="text" class="form-control" id="choice5" placeholder="Enter choice #5" name="choiceFive">
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2 remove" id="rem5" for="choice">Remove Choice 5</label>
         <div class="col-sm-10">
-          <textarea type="text" class="form-control" id="descr5" placeholder="Enter description for choice #5 (optional, 150 symbols max)"></textarea>
+          <textarea type="text" class="form-control" id="descr5" placeholder="Enter description for choice #5 (optional, 150 symbols max)" name="choiceDescriptionFive"></textarea>
         </div>
       </div>
     </div>
@@ -143,7 +143,7 @@
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
           <div class="checkbox">
-            <label><input type="checkbox"> I require voter's name to be entered</label>
+            <label><input type="checkbox" name="checkbox"> I require voter's name to be entered</label>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
+//const usersRoutes = require("./routes/users");
 const sharedFunctions = require ("./lib/sharedFunctions")(knex);
 const landingRoutes = require("./routes/landing")(sharedFunctions);
 const pollAdminRoutes = require("./routes/pollAdmin")(sharedFunctions);
@@ -58,13 +58,10 @@ app.use("/votingTYRoutes", votingTYRoutes);
 // Home page
 
 
-app.get("/vote", (req, res) => {
-  res.render("voting");
-});
 
-app.get("/vote", (req, res) => {
-  res.render("voting");
-});
+
+
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

@@ -1,16 +1,3 @@
-$(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api/users"
-  }).done((users) => {
-    // for(user of users) {
-    //   $("<div>").text(user.name).appendTo($("body"));
-    // }
-  });;
-
-});
-
-
 $(document).ready(function() {
   var addChoice = 0;
 
@@ -28,10 +15,6 @@ $(document).ready(function() {
           $(".newchoice5").slideDown("slow");
           $("#rem4").css('visibility', 'hidden');
           addChoice += 1;
-<<<<<<< HEAD
-        } else {
-=======
->>>>>>> 0feada0033c44ae94c07326e86ad15861de53089
           $("#addchoice").attr("disabled", "disabled");
         }
       }
