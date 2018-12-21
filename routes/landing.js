@@ -24,8 +24,8 @@ module.exports = (sharedFunctions) => {
         */
         console.log("submit button received:", req.body)
         
-        noBlanks = function (req.body.name, req.body.email, req.body.pollTitle, req.body.choiceOne,  req.body.choiceTwo) {
-            if (req.body.name.trim() === undefined || req.body.email === undefined || req.body.pollTitle.trim() === undefined || req.body.choiceOne.trim() === undefined || req.body.choiceTwo.trim() === undefined ){
+        noBlanks = function (req.body.name, req.body.email, req.body.pollTitle, req.body.choice1,  req.body.choice2) {
+            if (req.body.name.trim() === undefined || req.body.email === undefined || req.body.pollTitle.trim() === undefined || req.body.choice1.trim() === undefined || req.body.choice2.trim() === undefined ){
                 //TO-DO will need to notify of Toggle Div for Error
             } else {
                 const startDate = moment(Date.now()).valueOf();
