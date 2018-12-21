@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const noPage  = express.Router();
 
 module.exports = (knex) => {
 
@@ -11,5 +11,5 @@ module.exports = (knex) => {
         res.render()
     })
 
-    return router;
+    return noPage;
 }

@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const  pollAdmin = express.Router();
 
 module.exports = (knex) => {
     // poll admin access to poll details
@@ -20,5 +20,5 @@ module.exports = (knex) => {
     });
 
 
-    return router;
+    return pollAdmin;
 }

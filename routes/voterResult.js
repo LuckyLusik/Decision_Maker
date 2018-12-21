@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const voterResult  = express.Router();
 
 module.exports = (knex) => {
 
@@ -10,5 +10,5 @@ module.exports = (knex) => {
         res.render()
     })
 
-    return router;
+    return voterResult;
 }

@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const voterVoting  = express.Router();
 
 module.exports = (knex) => {
     //page to display all details as requried by Poll Admin (see input/out flow doc)
@@ -23,5 +23,5 @@ module.exports = (knex) => {
         res.redirect('votingTY');
     })
 
-    return router;
+    return voterVoting;
 }

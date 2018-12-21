@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const pollSetupTY  = express.Router();
 
 module.exports = (knex) => {
     // Thanks poll admin after setuping poll
@@ -19,5 +19,5 @@ module.exports = (knex) => {
 
     });
 
-    return router;
+    return pollSetupTY;
 }

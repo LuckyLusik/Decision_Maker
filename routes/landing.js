@@ -7,7 +7,8 @@ module.exports = (knex) => {
     // Landing page will capture details of the poll to be created
     // Details captured will be fed to all subsequent pages to display relevent data
     landing.get("/", (req, res) => {
-        res.render("landing");
+        
+        res.render("../views/index.ejs");
       });
 
     landing.put("/", function (req, res) {
@@ -23,7 +24,7 @@ module.exports = (knex) => {
         */
         const pollAdminObject = sharedFunctions.dataValidationAdmin (req.body.adminName, req.body.adminEmail, req.body.pollTitle, req.body.pollDescription, req.body.choiceTitle, req.body.choiceDescription, req.body.endData, requireName, objectCreationAdmin)
         
-        var didInsertWork = pushAdminDetails(pollAdminObject);
+        const didInsertWork = pushAdminDetails(pollAdminObject);
 
         if (didInsertWork){
             res.redirect ('/pollSetupTY');

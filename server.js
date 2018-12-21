@@ -18,9 +18,9 @@ const knexLogger  = require('knex-logger');
 const usersRoutes = require("./routes/users");
 const sharedFunctions = require ("./lib/sharedFunctions")(knex);
 const landingRoutes = require("./routes/landing")(sharedFunctions);
-const pollAdminRoutes = requrie ("./routes/pollAdmin")(sharedFunctions);
+const pollAdminRoutes = require("./routes/pollAdmin")(sharedFunctions);
 const noPageRoutes = require("./routes/noPage")(sharedFunctions);
-const voterResultRoutes = requrie("./routes/voterResult")(sharedFunctions);
+const voterResultRoutes = require("./routes/voterResult")(sharedFunctions);
 const voterVotingRoutes = require("./routes/voterVoting")(sharedFunctions);
 const pollSetupTYRoutes = require("./routes/pollSetupTY")(sharedFunctions);
 const votingTYRoutes = require ("./routes/votingTY")(sharedFunctions);
@@ -44,8 +44,8 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex)); //remounted to test login page
-// commented out for testing app.use("/", landingRoutes);
+//app.use("/api/users", usersRoutes(knex)); 
+app.use("/", landingRoutes);
 app.use("/pollAdmin", pollAdminRoutes);
 app.use("/noPageRoutes", noPageRoutes);
 app.use("/voterResult", voterResultRoutes);
