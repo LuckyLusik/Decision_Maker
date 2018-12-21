@@ -62,6 +62,10 @@ app.get("/vote", (req, res) => {
   res.render("voting");
 });
 
+app.get("/vote", (req, res) => {
+  res.render("voting");
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
