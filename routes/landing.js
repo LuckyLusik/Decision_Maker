@@ -23,17 +23,29 @@ module.exports = (sharedFunctions) => {
         - objectionCreationAdmin is a callback function in sharedFunctions 
         */
         console.log("submit button received:", req.body)
-        const pollAdminObject = sharedFunctions.dataValidationAdmin (req.body.name, req.body.email, req.body.pollTitle, req.body.pollDescription, req.body.choiceOne,  req.body.choiceDescriptionOne, req.body.choiceTwo,  req.body.choiceDescriptionTwo,req.body.choiceThree,  req.body.choiceDescriptionThree, req.body.choiceFour,  req.body.choiceDescriptionFour, req.body.choiceFive,  req.body.choiceDescriptionFive, req.body.endData, req.body.checkbox, sharedFunctions.objectCreationAdmin)
         
-        const didInsertWork = sharedFunctions.pushAdminDetails(pollAdminObject);
+        noBlanks = function (req.body.name, req.body.email, req.body.pollTitle, req.body.choiceOne,  req.body.choiceTwo) {
+            if (req.body.name.trim() === undefined || req.body.email === undefined || req.body.pollTitle.trim() === undefined || req.body.choiceOne.trim() === undefined || req.body.choiceTwo.trim() === undefined ){
+                //TO-DO will need to notify of Toggle Div for Error
+            } else {
+                const startDate = moment(Date.now()).valueOf();
+                const urlString = urlString();
+                const pollCreatorInfo = [{ name: adminName, email: adminEmail}];
+                const pollInfo = [{title: pollTitle, description: pollDescription, start_date: startDate, end_date: endDate}]; //TO-DO : add urlString, requireName back into pollInfo
+                const choiceInfo = [{title: choiceTitle, description: choiceDescription}];
+                summaryArray = [pollInfo,pollCreatorInfo, choiceInfo];
 
-        if (didInsertWork){
-            res.redirect ('/pollSetupTY');
-        } else {
-            res.json("Something went wrong. Please try to submit your poll again")
+                knex('poll')
+                    .insert(summaryArray[0])
+                    .returning('*')
+                knex('creator')
+                    .insert(summaryArray[1])
+                    .returning('*')
+                knex('choice')
+                    .insert(summaryArray[2])
+                    .returning('*')
+            }
         }
-        
-        
     });
 
 
