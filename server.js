@@ -13,11 +13,12 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const moment      = require('moment')
 
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
 const sharedFunctions = require ("./lib/sharedFunctions")(knex);
-const landingRoutes = require("./routes/landing")(sharedFunctions);
+const landingRoutes = require("./routes/landing")(sharedFunctions,knex);
 const pollAdminRoutes = require("./routes/pollAdmin")(sharedFunctions);
 const noPageRoutes = require("./routes/noPage")(sharedFunctions);
 const voterResultRoutes = require("./routes/voterResult")(sharedFunctions);
