@@ -24,8 +24,8 @@ module.exports = (sharedFunctions) => {
         */
         console.log("submit button received:", req.body)
         
-        noBlanks = function (req.body.name, req.body.email, req.body.pollTitle, req.body.choice1,  req.body.choice2) {
-            if (req.body.name.trim() === undefined || req.body.email === undefined || req.body.pollTitle.trim() === undefined || req.body.choice1.trim() === undefined || req.body.choice2.trim() === undefined ){
+        function noBlanks (name, email, pollTitle, choice1,  choice2) {
+            if (name.trim() === undefined || email === undefined || pollTitle.trim() === undefined || choice1.trim() === undefined || choice2.trim() === undefined ){
                 //TO-DO will need to notify of Toggle Div for Error
             } else {
                 const startDate = moment(Date.now()).valueOf();
@@ -35,6 +35,7 @@ module.exports = (sharedFunctions) => {
                 const choiceInfo = [{title: choiceTitle, description: choiceDescription}];
                 summaryArray = [pollInfo,pollCreatorInfo, choiceInfo];
 
+                console.log("Before processing")
                 knex('poll')
                     .insert(summaryArray[0])
                     .returning('*')
@@ -44,8 +45,9 @@ module.exports = (sharedFunctions) => {
                 knex('choice')
                     .insert(summaryArray[2])
                     .returning('*')
-            }
+           }
         }
+        return noBlanks;
     });
 
 
