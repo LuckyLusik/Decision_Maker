@@ -22,10 +22,21 @@ module.exports = (sharedFunctions, knex) => {
         - send email
         - objectionCreationAdmin is a callback function in sharedFunctions 
         */
-        console.log("submit button received:", req.body)
-        
+        //OLD console.log("submit button received:", req.body)
+        const urlString = sharedFunctions.urlString(); //for urlID
+        const body = req.body;
+        const endDate = `${body.endDate} ${body.endHour} ${body.endAmPm}`;
+        let templateVars = {
+            name: body.name,
+            email: body.email,
+            pollTitle: body.pollTitle,
+            pollEndDate: endDate,
+            urlId: urlString,
+            choiceCounted: 0,
+            //will poll_id be needed for the thank you page? can be push into templateVars
+        }
+
         async function noBlanks (name, email, pollTitle, choice1, choice2) {
-            const body = req.body;
             try{
                 if (name.trim() === undefined || email === undefined || pollTitle.trim() === undefined || choice1.trim() === undefined || choice2.trim() === undefined ){
                     //TO-DO will need to notify of Toggle Div for Error
@@ -34,22 +45,24 @@ module.exports = (sharedFunctions, knex) => {
                 } else {
                     console.log('It passed check')
                     const startDate = moment(new Date()).format("YYYY-MM-DD hh:mm a");
-                    const endDate = `${body.endDate} ${body.endHour} ${body.endAmPm}`;
-                    console.log('startDate', startDate, 'endDate', typeof(body.endDate), body.endDate, 'time', typeof(body.endHour), body.endHour);
-                    const urlString = sharedFunctions.urlString();
+                    
+                    // OLD console.log('startDate', startDate, 'endDate', typeof(body.endDate), body.endDate, 'time', typeof(body.endHour), body.endHour);
                     const pollCreatorInfo = [{ name: body.name, email: body.email}];
                     const pollInfo = {title: body.pollTitle, description: body.pollDescription, start_date: startDate, end_date: endDate}; //TO-DO : add , id_url: urlString, requireName back into pollInfo
-                    const choiceInfo    = [body.choice1, body.choice2, body.choice3, body.choice4, body.choice5]
-                    const choiceDescription   = [body.choiceDescription1, body.choiceDescription2, body.choiceDescription3, body.choiceDescription4, 
+                    const choiceInfo = [body.choice1, body.choice2, body.choice3, body.choice4, body.choice5]
+                    const choiceDescription = [body.choiceDescription1, body.choiceDescription2, body.choiceDescription3, body.choiceDescription4, 
                     body.choiceDescription5]
                     let choiceArray     = [];
                     
 
                     for (const i in choiceInfo) {
                         if (!choiceInfo[i]) { break; }
-                        choiceArray.push({title: choiceInfo[i], description: choiceDescription[i]})
+                        choiceArray.push(
+                            {title: choiceInfo[i], description: choiceDescription[i]}
+                        )
+                        templateVars.choiceCounted = i+1;
                     }
-                    console.log('Variables', pollCreatorInfo, pollInfo, choiceArray)
+                    //console.log('Variables', pollCreatorInfo, pollInfo, choiceArray)
                     console.log("Before DB insert processing")
                     const [creator_id] = await knex('poll_creator')
                         .insert(pollCreatorInfo)
@@ -65,13 +78,15 @@ module.exports = (sharedFunctions, knex) => {
                 }
             }
             catch(err){
+                //will need to add further err catching 
                 console.log('bad bad', err)
             }          
         }
-        return noBlanks (req.body.name, req.body.name, req.body.email, req.body.pollTitle, req.body.choice1, req.body.choice2);
-        res.redirect('/pollSetupTY')
+        //processing the data into the db
+        noBlanks (req.body.name, req.body.name, req.body.email, req.body.pollTitle, req.body.choice1, req.body.choice2);
+        console.log(templateVars);
+        //Sends user into new page with all of the templateVars which is sufficient for the page to load with necessary text.
+        res.render('pollSetupTY', templateVars)
     });
-
-
     return landing;
 }
