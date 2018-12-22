@@ -29,6 +29,7 @@ module.exports = (sharedFunctions, knex) => {
             try{
                 if (name.trim() === undefined || email === undefined || pollTitle.trim() === undefined || choice1.trim() === undefined || choice2.trim() === undefined ){
                     //TO-DO will need to notify of Toggle Div for Error
+                    //TO-DO need to add urlString to returned ID
                 console.log('DID IT FAIL?')
                 } else {
                     console.log('It passed check')
@@ -45,25 +46,14 @@ module.exports = (sharedFunctions, knex) => {
                     
 
                     for (const i in choiceInfo) {
-                        console.log('In the choice array')
                         if (!choiceInfo[i]) { break; }
                         choiceArray.push({title: choiceInfo[i], description: choiceDescription[i]})
-                        console.log('did I make it?')
                     }
                     console.log('Variables', pollCreatorInfo, pollInfo, choiceArray)
-                    /*
-                    knex('whatever')
-                    .insert(toInsert)
-                    .returning('id')
-                    .then((ids) => {
-                        return knex.whatever
-                    })
-                    */ 
-                    console.log("Before processing")
+                    console.log("Before DB insert processing")
                     const [creator_id] = await knex('poll_creator')
                         .insert(pollCreatorInfo)
                         .returning('id')
-                        //OLD console.log(creator)
                     pollInfo.creator_id = creator_id
                     const [poll_id] = await knex('poll')
                         .insert(pollInfo)
@@ -71,23 +61,15 @@ module.exports = (sharedFunctions, knex) => {
                     choiceArray.forEach(c => c['poll_id'] = poll_id)
                     const choice = await knex('choice')
                         .insert(choiceArray)
-                        .returning('id') //TO-DO, how do I return an ID to push the choice title ids?
+                        .returning('id')
                 }
             }
             catch(err){
                 console.log('bad bad', err)
-            }
-        //    knex('poll').select('*').asCallback(function(err,rows){
-        //        if(err){
-        //        console.error(err)
-        //        return
-        //         } 
-        //         console.log(rows)
-        //         return
-        //    })
-          
+            }          
         }
         return noBlanks (req.body.name, req.body.name, req.body.email, req.body.pollTitle, req.body.choice1, req.body.choice2);
+        res.redirect('/pollSetupTY')
     });
 
 
