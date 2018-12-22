@@ -14,11 +14,12 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const moment      = require('moment')
+const nodemailer  = require('nodemailer');
 
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
 const sharedFunctions = require ("./lib/sharedFunctions")(knex);
-const landingRoutes = require("./routes/landing")(sharedFunctions,knex);
+const landingRoutes = require("./routes/landing")(sharedFunctions,knex, nodemailer);
 const pollAdminRoutes = require("./routes/pollAdmin")(sharedFunctions);
 const noPageRoutes = require("./routes/noPage")(sharedFunctions);
 const voterResultRoutes = require("./routes/voterResult")(sharedFunctions);
@@ -47,10 +48,10 @@ app.use(express.static("public"));
 // Mount all resource routes
 //app.use("/api/users", usersRoutes(knex)); 
 app.use("/", landingRoutes);
-app.use("/pollAdmin", pollAdminRoutes);
+app.use("/pa", pollAdminRoutes);
 app.use("/noPageRoutes", noPageRoutes);
 app.use("/voterResult", voterResultRoutes);
-app.use("/voterVoting", voterVotingRoutes);
+app.use("/vl", voterVotingRoutes);
 app.use("/pollSetupTY", pollSetupTYRoutes);
 app.use("/votingTYRoutes", votingTYRoutes);
 

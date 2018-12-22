@@ -2,6 +2,8 @@
 const moment = require('moment');
 const express = require('express'); 
 const landing  = express.Router();
+const nodemailer = require('nodemailer')
+
 
 module.exports = (sharedFunctions, knex) => {
     // Landing page will capture details of the poll to be created
@@ -35,6 +37,23 @@ module.exports = (sharedFunctions, knex) => {
             choiceCounted: 0,
             //will poll_id be needed for the thank you page? can be push into templateVars
         }
+        const mailBody = {
+            from: 'lighthousetesting@yahoo.com', // sender address
+            to: body.email, // list of receivers
+            subject: `${body.name}, ${body.pollTitle} is setup!`, // Subject line
+            text: `Decision Maker has created your ${body.pollTitle} poll. The link to your admin page is : localhost:8080/pa/${urlString}. Please share the poll link: localhost:8080/vl/${urlString}. `, // plain text body
+            html: 
+            `<div class="top">
+            <img src="/images/logo.png" class="logo">
+            <h1>Decision Maker</h1>
+            </div>
+            <body> 
+            Decision Maker has created your ${body.pollTitle} poll. 
+            <br> The link to your admin page is : <a href="localhost:8080/pa/${urlString}">localhost:8080/pa/${urlString}</a>. 
+            <br>
+            <br> Please share the poll link: <a href="localhost:8080/vl/${urlString}">localhost:8080/vl/${urlString}</a>.
+            </body>` // html body
+        };
 
         async function noBlanks (name, email, pollTitle, choice1, choice2) {
             try{
@@ -45,10 +64,9 @@ module.exports = (sharedFunctions, knex) => {
                 } else {
                     console.log('It passed check')
                     const startDate = moment(new Date()).format("YYYY-MM-DD hh:mm a");
-                    
                     // OLD console.log('startDate', startDate, 'endDate', typeof(body.endDate), body.endDate, 'time', typeof(body.endHour), body.endHour);
                     const pollCreatorInfo = [{ name: body.name, email: body.email}];
-                    const pollInfo = {title: body.pollTitle, description: body.pollDescription, start_date: startDate, end_date: endDate}; //TO-DO : add , id_url: urlString, requireName back into pollInfo
+                    const pollInfo = {title: body.pollTitle, description: body.pollDescription, start_date: startDate, end_date: endDate, short_url: urlString, }; //TO-DO : add , id_url: urlString, requireName back into pollInfo
                     const choiceInfo = [body.choice1, body.choice2, body.choice3, body.choice4, body.choice5]
                     const choiceDescription = [body.choiceDescription1, body.choiceDescription2, body.choiceDescription3, body.choiceDescription4, 
                     body.choiceDescription5]
@@ -60,7 +78,7 @@ module.exports = (sharedFunctions, knex) => {
                         choiceArray.push(
                             {title: choiceInfo[i], description: choiceDescription[i]}
                         )
-                        templateVars.choiceCounted = i+1;
+                        templateVars.choiceCounted = Number(i)+1;
                     }
                     //console.log('Variables', pollCreatorInfo, pollInfo, choiceArray)
                     console.log("Before DB insert processing")
@@ -75,6 +93,8 @@ module.exports = (sharedFunctions, knex) => {
                     const choice = await knex('choice')
                         .insert(choiceArray)
                         .returning('id')
+
+                    
                 }
             }
             catch(err){
@@ -86,7 +106,13 @@ module.exports = (sharedFunctions, knex) => {
         noBlanks (req.body.name, req.body.name, req.body.email, req.body.pollTitle, req.body.choice1, req.body.choice2);
         console.log(templateVars);
         //Sends user into new page with all of the templateVars which is sufficient for the page to load with necessary text.
-        res.render('pollSetupTY', templateVars)
+        sharedFunctions.mailer(mailBody, (error) => {
+            if (error){
+                return console.log('ERROR from email ON LANDING PAGE. EMAIL NOT SENT');
+            }
+            res.render('voting', templateVars)
+        })
+        
     });
     return landing;
 }
