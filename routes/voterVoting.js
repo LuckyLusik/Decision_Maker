@@ -10,11 +10,12 @@ module.exports = (sharedFunctions) => {
         /*
         - Has voting expired?
         - render page
+        - render choice columns and stars
         */
         res.render("../views/voting.ejs");
     })
 
-    voterVoting.put(":/id", function (req, res) {
+    voterVoting.put("/:id", function (req, res) {
         /*
         -Validate all inputs meet requirements (ie rank order, user name if req.)
         -If error, send ajax response back to error field.
