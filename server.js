@@ -26,6 +26,7 @@ const voterResultRoutes = require("./routes/voterResult")(sharedFunctions, knex)
 const voterVotingRoutes = require("./routes/voterVoting")(sharedFunctions, knex);
 const pollSetupTYRoutes = require("./routes/pollSetupTY")(sharedFunctions, knex);
 const votingTYRoutes = require ("./routes/votingTY")(sharedFunctions, knex);
+const renderRoutes = require ("./routes/render")(sharedFunctions, knex);
 const testRoutes = require ("./routes/test")(sharedFunctions, knex)//test route
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -56,6 +57,7 @@ app.use("/vl", voterVotingRoutes);
 app.use("/pollSetupTY", pollSetupTYRoutes);
 app.use("/votingTYRoutes", votingTYRoutes);
 app.use("/testRoutes", testRoutes);
+app.use("/render", renderRoutes);
 
 
 
