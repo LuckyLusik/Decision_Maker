@@ -36,7 +36,7 @@ module.exports = (sharedFunctions, knex) => {
     });
 
     pollAdmin.post("/:id", function(req, res){
-        // stop poll function is called. Poll is closed. 
+        // stop poll function is called. Poll is closed.
 
     });
 
