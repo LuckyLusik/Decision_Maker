@@ -5,9 +5,9 @@ const voterResult  = express.Router();
 
 module.exports = (knex) => {
 
-    voterResult.get("/:id/results", function(req, res){
-        
-        res.render()
+    voterResult.get("/voterResult", function(req, res){
+
+        res.render("../views/results.ejs")
     })
 
     return voterResult;

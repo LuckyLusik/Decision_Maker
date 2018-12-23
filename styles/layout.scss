@@ -62,6 +62,212 @@ h1 { font-size: 1.5em; margin: 10px; }
 /* stop ranking*/
 
 
+/*
+Pie chart
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+@keyframes bake-pie {
+  from {
+    transform: rotate(0deg) translate3d(0,0,0);
+  }
+}
+
+section.piechart {
+  margin-top: 30px;
+  width:100%;
+}
+
+.leader {
+  width: 50%;
+}
+
+.pie-graph {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pieID {
+  display: inline-block;
+  vertical-align: top;
+}
+.pie {
+  height: 200px;
+  width: 200px;
+  position: relative;
+  margin-bottom: 40px;
+  margin-right: 10px;
+}
+
+.pie::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  width: 100px;
+  height: 100px;
+  background: $backcolor-background-color;
+  border-radius: 50%;
+  top: 50px;
+  left: 50px;
+}
+.pie::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 50%;
+  box-shadow: 0 0 3px 4px rgba(0,0,0,0.1);
+  margin: 220px auto;
+
+}
+.slice {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  clip: rect(0px, 200px, 200px, 100px);
+  animation: bake-pie 1s;
+}
+.slice span {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  clip: rect(0px, 200px, 200px, 100px);
+}
+.legend {
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background: #FFF;
+  padding: 2.5em;
+  font-size: 13px;
+  box-shadow: 1px 1px 0 #DDD,
+              2px 2px 0 #BBB;
+}
+.legend li {
+  width: 100%;
+  margin-bottom: 0.7em;
+  padding: 1em 0 1em 1.5em;
+  border-left: 1.25em solid black;
+  display: flex;
+  justify-content: space-between;
+  border-color: grey;
+  border-bottom: 2px;
+  border-bottom-style: solid;
+}
+.legend em {
+  font-style: normal;
+  font-size: 1.2em;
+  width: 85%;
+  display: block;
+  margin-right: 10px;
+}
+.legend span {
+  font-weight: 700;
+  font-size: 2em;
+  width: 15%;
+  display: block;
+}
+
+/*
+End of pie chart
+*/
+
+/*
+Table
+*/
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  color: #3FEEE6;
+}
+
+table tr {
+  border: 2px solid #3FEEE6;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #3FEEE6;
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #3FEEE6;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+/*
+End of table
+*/
+
 body {
   background-color: $backcolor-background-color;
   font-family: 'Muli', sans-serif;
@@ -71,6 +277,12 @@ body {
     font-weight: 900;
     font-size: 6vw;
     margin: 0;
+  }
+
+  h2 {
+    font-weight: 900;
+    font-size: 2em;
+    color: $redhover-background-color
   }
 
   h3 {
@@ -95,9 +307,40 @@ body {
     font-size: 1.2em;
   }
 
+  .choice-user-name {
+    background-color: $logo-color;
+    padding: 1em 2em 2em 2em;
+    margin: 2em 0;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: white;
+  }
+
   .expire {
     color: $redhover-background-color;
+    display: flex;
+    justify-content: space-between;
   }
+
+  .expire button{
+    background-color: #3FEEE6;
+    width: 40%;
+    font-size: 1.1em;
+    color: black;
+    transition: all 0.5s ease;
+    margin: 0 0 1em 1em;
+    outline: none;
+  }
+
+  .expire button:hover {
+    background-color: $redhover-background-color;
+  }
+
+  .expire h3 {
+    width: 60%;
+    text-align: left;
+  }
+
 
   .vote-descr p {
     font-size: 1.2em;
@@ -112,6 +355,7 @@ body {
   .logo {
     height: 90px;
     width: 90px;
+    margin-right: 20px;
   }
 
   .main_descrip {
@@ -122,8 +366,10 @@ body {
 
   .top {
     width: 100%;
+    /*display: flex;
+    justify-content: space-between;*/
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
   }
 
 
