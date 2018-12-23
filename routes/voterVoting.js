@@ -56,8 +56,13 @@ module.exports = (sharedFunctions, knex) => {
         })
         pollingDB.then( ()=>{
             console.log('Page Load')
+            console.log('Poll Data =>', pollData)
+            console.log('Choice Data =>', choiceData)
+            console.log('Poll Create Data =>', pollCreatorData)
             res.render("../views/voting.ejs")}
         ).catch(console.log('Catch Error'))
+
+        
     })
 
     voterVoting.put("/:id", function (req, res) {
