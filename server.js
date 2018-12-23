@@ -20,12 +20,13 @@ const nodemailer  = require('nodemailer');
 //const usersRoutes = require("./routes/users");
 const sharedFunctions = require ("./lib/sharedFunctions")(knex);
 const landingRoutes = require("./routes/landing")(sharedFunctions,knex, nodemailer);
-const pollAdminRoutes = require("./routes/pollAdmin")(sharedFunctions);
-const noPageRoutes = require("./routes/noPage")(sharedFunctions);
-const voterResultRoutes = require("./routes/voterResult")(sharedFunctions);
-const voterVotingRoutes = require("./routes/voterVoting")(sharedFunctions);
-const pollSetupTYRoutes = require("./routes/pollSetupTY")(sharedFunctions);
-const votingTYRoutes = require ("./routes/votingTY")(sharedFunctions);
+const pollAdminRoutes = require("./routes/pollAdmin")(sharedFunctions, knex);
+const noPageRoutes = require("./routes/noPage")(sharedFunctions, knex);
+const voterResultRoutes = require("./routes/voterResult")(sharedFunctions, knex);
+const voterVotingRoutes = require("./routes/voterVoting")(sharedFunctions, knex);
+const pollSetupTYRoutes = require("./routes/pollSetupTY")(sharedFunctions, knex);
+const votingTYRoutes = require ("./routes/votingTY")(sharedFunctions, knex);
+const testRoutes = require ("./routes/test")(sharedFunctions, knex)//test route
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -54,6 +55,7 @@ app.use("/voterResult", voterResultRoutes);
 app.use("/vl", voterVotingRoutes);
 app.use("/pollSetupTY", pollSetupTYRoutes);
 app.use("/votingTYRoutes", votingTYRoutes);
+app.use("/testRoutes", testRoutes);
 
 
 
