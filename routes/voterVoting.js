@@ -7,6 +7,7 @@ module.exports = (sharedFunctions, knex) => {
     //page to display all details as requried by Poll Admin (see input/out flow doc)
     //user will respond to the question
     voterVoting.get("/:id", function(req, res){
+<<<<<<< HEAD
         const templateVars = {
             urlId: req.params.id,
         }
@@ -75,6 +76,27 @@ module.exports = (sharedFunctions, knex) => {
         -If error, send ajax response back to error field.
         -redirect user to voting thank you page
         */
+=======
+
+    //display poll title, poll description, choice titles, choice descriptions, time expiration
+
+    let pollData = knex('poll')
+       // Or .where('poll.short_url', req.params.id)
+      .where('short_url', '=', req.params.id)
+      .limit(10)
+      .join('choice', 'choice.poll_id', '=', 'poll.id')
+      .select('poll.title', 'poll.description', 'poll.start_date', 'poll.end_date', 'choice.title', 'choice.description')
+      .then(function (rows) {
+        console.log(rows);
+        res.json(rows);
+    })
+
+    voterVoting.put(":/id", function (req, res) {
+        //use similar functions from landing page to send data to server
+        //insert name
+        //insert email
+        //send choices (using borda function)
+>>>>>>> 361dcc9ff287e251a6cc8cec1bd6bbacdcc1fc25
         res.redirect('votingTY');
     })
 
