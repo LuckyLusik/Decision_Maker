@@ -20,7 +20,7 @@ function voteTitleDescription(pollCreator, poll, choice){
     <section class="expire">
         <h3>Expire ${moment(poll[0].end_date).fromNow()}</h3>
     </section>
-    <form method="GET" class="form-horizontal formSub" action="/">
+    <form method="POST" class="form-horizontal formSub" action="/">
         <div class="form-group">
         <label class="control-label col-sm-2" for="voter-name">Name:</label>
         <div class="col-sm-10">
@@ -47,6 +47,7 @@ function voteTitleDescription(pollCreator, poll, choice){
         </div>
     </form>
     </section>
+    <script type="text/javascript" src="/scripts/app.js"></script>
     `
 };
 
@@ -60,13 +61,13 @@ function votingElement(choice){
         let ratingString = "";
 
         for (let i = voteNum; i > 0; i--) {
-            ratingString +=`<input type="radio" id="ch${j+1}-star${i}" name="ch1-rating" value="${i}" /><label class = "full" for="ch${j+1}-star${i}" title="${i} stars"></label>`
+            ratingString +=`<input type="radio" id="ch${j+1}-star${i}" name="ch${j+1}-rating" value="${i}" /><label class = "full" for="ch${j+1}-star${i}" title="${i} stars"></label>`
         }
         
         votingString +=
         `<div class="form-group row">
           <div class="col-md-12">
-            <div class="choice_rank ${j+1}">
+            <div class="choice_rank block${j+1}">
             <h4>Choice ${j+1}:</h4>
             <fieldset class="rating stars">
             ${ratingString}
