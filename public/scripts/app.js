@@ -1,7 +1,36 @@
 $(document).ready(function() {
   var addChoice = 0;
+  // var addChoice = 3;
 
-  $("#addchoice").click(function() {
+  // function addNewChoice(choiceNum) {
+  //   let newChoiceDiv =
+  //   `<div class=\`newchoice${choiceNum}\`>
+  //     <div class="form-group">
+  //       <label class="control-label col-sm-2" for=\`choice${choiceNum}\`>Choice ${choiceNum}:</label>
+  //       <div class="col-sm-10">
+  //         <input type="text" class="form-control" id=\`choice${choiceNum}\` placeholder="Enter choice #${choiceNum}" name="choice${choiceNum}"">
+  //       </div>
+  //     </div>
+  //     <div class="form-group">
+  //       <label class="control-label col-sm-2 remove" id=\`rem${choiceNum}\` for="choice">Remove Choice ${choiceNum}</label>
+  //       <div class="col-sm-10">
+  //         <textarea type="text" class="form-control" id=\`descr${choiceNum}\` placeholder="Enter description for choice #${choiceNum} (optional, 150 symbols max)" name=\`choiceDescription${choiceNum}\`></textarea>
+  //       </div>
+  //     </div>
+  //   </div>`
+  //   return newChoiceDiv;
+  // }
+
+  // var chosen = addNewChoice(addChoice);
+
+
+  // $("#addchoice").click(function() {
+  //   $("#poll-info").find("#ch2-div").append(chosen).slideDown("slow");
+  //   //$(`.newchoice${addChoice}`).slideDown("slow");
+  // });
+
+
+$("#addchoice").click(function() {
     if (addChoice === 0){
       $(".newchoice3").slideDown("slow");
       addChoice += 1;
@@ -64,35 +93,35 @@ $(".choice_rank").click(function(event) {
   }
 });
 
-$(".one").click(function() {
+$(".block1").click(function() {
   if (event.target.value) {
-    $(".one").css("pointer-events" , "none");
+    $(".block1").css("pointer-events" , "none");
   }
 });
-$(".two").click(function() {
+$(".block2").click(function() {
   if (event.target.value) {
-    $(".two").css("pointer-events" , "none");
+    $(".block2").css("pointer-events" , "none");
   }
 });
-$(".three").click(function() {
+$(".block3").click(function() {
   if (event.target.value) {
-    $(".three").css("pointer-events" , "none");
+    $(".block3").css("pointer-events" , "none");
   }
 });
-$(".four").click(function() {
+$(".block4").click(function() {
   if (event.target.value) {
-    $(".four").css("pointer-events" , "none");
+    $(".block4").css("pointer-events" , "none");
   }
 });
-$(".five").click(function() {
+$(".block5").click(function() {
   if (event.target.value) {
-    $(".five").css("pointer-events" , "none");
+    $(".block5").css("pointer-events" , "none");
   }
 });
 
 $("#reset-btn").click(function() {
-  $(".one, .two, .three, .four, .five").css("pointer-events" , "auto");
-  $(".one, .two, .three, .four, .five").attr("value" , "");
+  $(".block1, .block2, .block3, .block4, .block5").css("pointer-events" , "auto");
+  $(".block1, .block2, .block3, .block4, .block5").attr("value" , "");
   // $(".rating input").attr("checked" , "false");
   $( ".rating input" ).prop( "checked", false );
   // $(".rating input").removeAttr("checked");
