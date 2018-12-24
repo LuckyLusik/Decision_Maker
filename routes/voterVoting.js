@@ -10,7 +10,6 @@ module.exports = (sharedFunctions, knex) => {
         const templateVars = {
             urlId: req.params.id,
         }
-        
         res.render("../views/voting.ejs")
     
         /*

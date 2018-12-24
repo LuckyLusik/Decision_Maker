@@ -1,149 +1,113 @@
 //function to Render title and description and end buttons. Tool will utilize 
 
 function renderVotingPage(dataObject){
-    voteTitleDescription(creatorName, pollTitle, pollDescription, expiration);
-    votingElement(choiceNum, choiceTitle, choiceDesciption)
-    ratingElement(choiceNum)
+    const pollData = dataObject.pollData;
+    const choiceData = dataObject.choiceData;
+    const pollCreatorData = dataObject.pollCreatorData;
+    $("#voteInsert").prepend(voteTitleDescription(pollCreatorData, pollData, choiceData))
 }
 
-function voteTitleDescription(creatorName, pollTitle, pollDescription, expiration){
-
+function voteTitleDescription(pollCreator, poll, choice){
+    console.log(pollCreator, poll, choice);
+    return renderString =
+    `<section class="main_descrip">
+        <p>Welcome to ${pollCreator[0].name}'s Poll Page!</p>
+    </section>
+    <section class="vote-descr">
+        <h3>${poll[0].title}</h3>
+        <p>${poll[0].description}</p>
+    </section>
+    <section class="expire">
+        <h3>Expire ${moment(poll[0].end_date).fromNow()}</h3>
+    </section>
+    <form method="GET" class="form-horizontal formSub" action="/">
+        <div class="form-group">
+        <label class="control-label col-sm-2" for="voter-name">Name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="voter-name" placeholder="Enter your name">
+        </div>
+        </div>
+        <hr>
+        ${votingElement(choice)}
+        <div class="form-group row">
+        <div class="col-md-12">
+            <div class="add-choice centr">
+            <button type="button" class="btn btn-default" id="reset-btn">Reset all choices</button>
+            </div>
+        </div>
+        </div>
+        <hr>
+        <div class="form-group row">
+        <div class="col-md-12">
+            <div class="but-div">
+            <button type="submit" class="btn btn-default" id="vote-btn">Submit</button>
+            </div>
+        </div>
+        </div>
+        </div>
+    </form>
+    </section>
+    `
 };
 
 //function Render voting options
 
-function votingElement(voteNum){
+function votingElement(choice){
+    const voteNum = Number(choice.length);
+    let votingString = "";
+    
+    for (let j = 0; j < voteNum; j++) {
+        let ratingString = "";
 
-}
-
-function ratingElement(aNum){
-    const ratingString = "";
-    const voteNum = Number(aNum);
-    for (let i = voteNum.length+1; i < 1; i--){
-        ratingString +=`<input type="radio" id="ch1-star${i}" name="ch1-rating" value="${i}" /><label class = "full" for="ch1-star${i}" title="${i} stars"></label>`
+        for (let i = voteNum; i > 0; i--) {
+            ratingString +=`<input type="radio" id="ch${j+1}-star${i}" name="ch1-rating" value="${i}" /><label class = "full" for="ch${j+1}-star${i}" title="${i} stars"></label>`
+        }
+        
+        votingString +=
+        `<div class="form-group row">
+          <div class="col-md-12">
+            <div class="choice_rank ${j+1}">
+            <h4>Choice ${j+1}:</h4>
+            <fieldset class="rating stars">
+            ${ratingString}
+            </fieldset>
+            </div>
+            <h5>
+              ${choice[j].title}
+            </h5>
+            <p>
+              ${choice[j].description}
+            </p>
+            <hr>
+          </div>
+        </div>
+        `
     }
-    console.log(ratingString);
-    return ratingString;
+    return votingString;
 }
 
-<div class="form-group row">
-          <div class="col-md-12">
-            <div class="choice_rank one">
-            <h4>Choice 1:</h4>
-            <fieldset class="rating stars">
-              <input type="radio" id="ch1-star5" name="ch1-rating" value="5" /><label class = "full" for="ch1-star5" title="Awesome - 5 stars"></label>
-              <input type="radio" id="ch1-star4" name="ch1-rating" value="4" /><label class = "full" for="ch1-star4" title="Pretty good - 4 stars"></label>
-              <input type="radio" id="ch1-star3" name="ch1-rating" value="3" /><label class = "full" for="ch1-star3" title="Meh - 3 stars"></label>
-              <input type="radio" id="ch1-star2" name="ch1-rating" value="2" /><label class = "full" for="ch1-star2" title="Kinda bad - 2 stars"></label>
-              <input type="radio" id="ch1-star1" name="ch1-rating" value="1" /><label class = "full" for="ch1-star1" title="No way! - 1 star"></label>
-            </fieldset>
-            </div>
-            <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-            </h5>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <hr>
-          </div>
-        </div>
+// OLD
+//function ratingElement(aNum){
+//     let ratingString = "";
+//     const voteNum = aNum;
+//     console.log(voteNum)
 
-        <div class="form-group row">
-          <div class="col-md-12">
-            <div class="choice_rank two">
-            <h4>Choice 2:</h4>
-            <fieldset class="rating stars">
-              <input type="radio" id="ch2-star5" name="ch2-rating" value="5" /><label class = "full" for="ch2-star5" title="Awesome - 5 stars"></label>
-              <input type="radio" id="ch2-star4" name="ch2-rating" value="4" /><label class = "full" for="ch2-star4" title="Pretty good - 4 stars"></label>
-              <input type="radio" id="ch2-star3" name="ch2-rating" value="3" /><label class = "full" for="ch2-star3" title="Meh - 3 stars"></label>
-              <input type="radio" id="ch2-star2" name="ch2-rating" value="2" /><label class = "full" for="ch2-star2" title="Kinda bad - 2 stars"></label>
-              <input type="radio" id="ch2-star1" name="ch2-rating" value="1" /><label class = "full" for="ch2-star1" title="No way! - 1 star"></label>
-            </fieldset>
-            </div>
-            <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-            </h5>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <hr>
-          </div>
-        </div>
+        
 
-        <div class="form-group row">
-          <div class="col-md-12">
-            <div class="choice_rank">
-            <h4>Choice 3:</h4>
-            <fieldset class="rating stars three">
-              <input type="radio" id="ch3-star5" name="ch3-rating" value="5" /><label class = "full" for="ch3-star5" title="Awesome - 5 stars"></label>
-              <input type="radio" id="ch3-star4" name="ch3-rating" value="4" /><label class = "full" for="ch3-star4" title="Pretty good - 4 stars"></label>
-              <input type="radio" id="ch3-star3" name="ch3-rating" value="3" /><label class = "full" for="ch3-star3" title="Meh - 3 stars"></label>
-              <input type="radio" id="ch3-star2" name="ch3-rating" value="2" /><label class = "full" for="ch3-star2" title="Kinda bad - 2 stars"></label>
-              <input type="radio" id="ch3-star1" name="ch3-rating" value="1" /><label class = "full" for="ch3-star1" title="No way! - 1 star"></label>
-            </fieldset>
-            </div>
-            <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-            </h5>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <hr>
-          </div>
-        </div>
+//     console.log(ratingString, voteNum);
+//     return ratingString;
+// }
 
-        <div class="form-group row">
-          <div class="col-md-12">
-            <div class="choice_rank four">
-            <h4>Choice 4:</h4>
-            <fieldset class="rating stars">
-              <input type="radio" id="ch4-star5" name="ch4-rating" value="5" /><label class = "full" for="ch4-star5" title="Awesome - 5 stars"></label>
-              <input type="radio" id="ch4-star4" name="ch4-rating" value="4" /><label class = "full" for="ch4-star4" title="Pretty good - 4 stars"></label>
-              <input type="radio" id="ch4-star3" name="ch4-rating" value="3" /><label class = "full" for="ch4-star3" title="Meh - 3 stars"></label>
-              <input type="radio" id="ch4-star2" name="ch4-rating" value="2" /><label class = "full" for="ch4-star2" title="Kinda bad - 2 stars"></label>
-              <input type="radio" id="ch4-star1" name="ch4-rating" value="1" /><label class = "full" for="ch4-star1" title="No way! - 1 star"></label>
-            </fieldset>
-            </div>
-            <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-            </h5>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <hr>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-md-12">
-            <div class="choice_rank five">
-            <h4>Choice 5:</h4>
-            <fieldset class="rating stars">
-              <input type="radio" id="ch5-star5" name="ch5-rating" value="5" /><label class = "full" for="ch5-star5" title="Awesome - 5 stars"></label>
-              <input type="radio" id="ch5-star4" name="ch5-rating" value="4" /><label class = "full" for="ch5-star4" title="Pretty good - 4 stars"></label>
-              <input type="radio" id="ch5-star3" name="ch5-rating" value="3" /><label class = "full" for="ch5-star3" title="Meh - 3 stars"></label>
-              <input type="radio" id="ch5-star2" name="ch5-rating" value="2" /><label class = "full" for="ch5-star2" title="Kinda bad - 2 stars"></label>
-              <input type="radio" id="ch5-star1" name="ch5-rating" value="1" /><label class = "full" for="ch5-star1" title="No way! - 1 star"></label>
-            </fieldset>
-            </div>
-            <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-            </h5>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <hr>
-          </div>
-        </div>
 
 $(document).ready(function() {
+    let identifyKey = {};
+    const shortUrl = location.pathname.split('/vl/');
+    const remove = shortUrl.shift();
+    identifyKey.shortUrl = shortUrl; 
+    console.log(identifyKey.shortUrl);
     $.ajax(
-        '/render',
-        {method: 'GET'}
-    ).then(renderVotingPage)
-
-
-
-
-
-}
+        '/render/vote',
+        {method: 'POST',
+        data : identifyKey,
+    }).then(renderVotingPage)
+});
