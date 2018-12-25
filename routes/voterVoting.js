@@ -13,7 +13,7 @@ module.exports = (sharedFunctions, knex) => {
         res.render("../views/voting.ejs")
     })
 
-    voterVoting.put("/:id", function (req, res) {
+    voterVoting.post("/:id", function (req, res) {
         
         /*
         -Validate all inputs meet requirements (ie rank order, user name if req.)

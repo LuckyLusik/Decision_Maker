@@ -1,7 +1,36 @@
 $(document).ready(function() {
   var addChoice = 0;
+  // var addChoice = 3;
 
-  $("#addchoice").click(function() {
+  // function addNewChoice(choiceNum) {
+  //   let newChoiceDiv =
+  //   `<div class=\`newchoice${choiceNum}\`>
+  //     <div class="form-group">
+  //       <label class="control-label col-sm-2" for=\`choice${choiceNum}\`>Choice ${choiceNum}:</label>
+  //       <div class="col-sm-10">
+  //         <input type="text" class="form-control" id=\`choice${choiceNum}\` placeholder="Enter choice #${choiceNum}" name="choice${choiceNum}"">
+  //       </div>
+  //     </div>
+  //     <div class="form-group">
+  //       <label class="control-label col-sm-2 remove" id=\`rem${choiceNum}\` for="choice">Remove Choice ${choiceNum}</label>
+  //       <div class="col-sm-10">
+  //         <textarea type="text" class="form-control" id=\`descr${choiceNum}\` placeholder="Enter description for choice #${choiceNum} (optional, 150 symbols max)" name=\`choiceDescription${choiceNum}\`></textarea>
+  //       </div>
+  //     </div>
+  //   </div>`
+  //   return newChoiceDiv;
+  // }
+
+  // var chosen = addNewChoice(addChoice);
+
+
+  // $("#addchoice").click(function() {
+  //   $("#poll-info").find("#ch2-div").append(chosen).slideDown("slow");
+  //   //$(`.newchoice${addChoice}`).slideDown("slow");
+  // });
+
+
+$("#addchoice").click(function() {
     if (addChoice === 0){
       $(".newchoice3").slideDown("slow");
       addChoice += 1;
