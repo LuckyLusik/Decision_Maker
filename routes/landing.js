@@ -28,6 +28,13 @@ module.exports = (sharedFunctions, knex) => {
         const urlString = sharedFunctions.urlString(); //for urlID
         const body = req.body;
         const endDate = `${body.endDate} ${body.endHour} ${body.endAmPm}`;
+        let checkBox = function () {
+            if (req.body.checkbox === 'on'){
+                return true;
+            } else {
+                return false;
+            }
+        }
         let templateVars = {
             name: body.name,
             email: body.email,
@@ -35,6 +42,7 @@ module.exports = (sharedFunctions, knex) => {
             pollEndDate: endDate,
             urlId: urlString,
             choiceCounted: 0,
+            checkbox: checkBox(),
             //will poll_id be needed for the thank you page? can be push into templateVars
         }
         const mailBody = {
@@ -62,11 +70,12 @@ module.exports = (sharedFunctions, knex) => {
                     //TO-DO need to add urlString to returned ID
                 console.log('DID IT FAIL?')
                 } else {
-                    console.log('It passed check')
+                    console.log('It passed check');
+                    await console.log('Req.body: ', req.body)
                     const startDate = moment(new Date()).format("YYYY-MM-DD hh:mm a");
                     // OLD console.log('startDate', startDate, 'endDate', typeof(body.endDate), body.endDate, 'time', typeof(body.endHour), body.endHour);
                     const pollCreatorInfo = [{ name: body.name, email: body.email}];
-                    const pollInfo = {title: body.pollTitle, description: body.pollDescription, start_date: startDate, end_date: endDate, short_url: urlString, }; //TO-DO : add , id_url: urlString, requireName back into pollInfo
+                    const pollInfo = {title: body.pollTitle, description: body.pollDescription, start_date: startDate, end_date: endDate, short_url: urlString, name_verfy: checkBox() }; //TO-DO : add , id_url: urlString, requireName back into pollInfo
                     const choiceInfo = [body.choice1, body.choice2, body.choice3, body.choice4, body.choice5]
                     const choiceDescription = [body.choiceDescription1, body.choiceDescription2, body.choiceDescription3, body.choiceDescription4, 
                     body.choiceDescription5]

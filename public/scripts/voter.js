@@ -18,7 +18,7 @@ function voteTitleDescription(pollCreator, poll, choice){
         <p>${poll[0].description}</p>
     </section>
     <section class="expire">
-        <h3>Expire ${moment(poll[0].end_date).fromNow()}</h3>
+        <h3>Expiration: ${moment(poll[0].end_date).add(5,'hours').fromNow()}</h3>
     </section>
     <form method="POST" class="form-horizontal formSub" action="/">
         <div class="form-group">
