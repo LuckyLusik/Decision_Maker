@@ -20,11 +20,11 @@ function voteTitleDescription(pollCreator, poll, choice){
     <section class="expire">
         <h3>Expiration: ${moment(poll[0].end_date).add(5,'hours').fromNow()}</h3>
     </section>
-    <form method="POST" class="form-horizontal formSub" action="/">
+    <form class="form-horizontal formSub" id="formData" name="formData" action="/">
         <div class="form-group">
         <label class="control-label col-sm-2" for="voter-name">Name:</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="voter-name" placeholder="Enter your name">
+            <input type="text" class="form-control" id="voter-name" name="voter-name" placeholder="Enter your name">
         </div>
         </div>
         <hr>
@@ -40,7 +40,7 @@ function voteTitleDescription(pollCreator, poll, choice){
         <div class="form-group row">
         <div class="col-md-12">
             <div class="but-div">
-            <button type="submit" class="btn btn-default" id="vote-btn">Submit</button>
+            <button type="submit" class="btn btn-default" id="vote-btn" name="formSubmit">Submit</button>
             </div>
         </div>
         </div>
@@ -107,7 +107,7 @@ $(document).ready(function() {
     identifyKey.shortUrl = shortUrl; 
     console.log(identifyKey.shortUrl);
     $.ajax(
-        '/render/vote',
+        '/render/voteRender',
         {method: 'POST',
         data : identifyKey,
     }).then(renderVotingPage)

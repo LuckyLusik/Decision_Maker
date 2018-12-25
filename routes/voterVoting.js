@@ -13,15 +13,5 @@ module.exports = (sharedFunctions, knex) => {
         res.render("../views/voting.ejs")
     })
 
-    voterVoting.post("/:id", function (req, res) {
-        
-        /*
-        -Validate all inputs meet requirements (ie rank order, user name if req.)
-        -If error, send ajax response back to error field.
-        -redirect user to voting thank you page
-        */
-        res.redirect('votingTY');
-    })
-
     return voterVoting;
 }

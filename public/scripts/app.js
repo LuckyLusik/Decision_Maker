@@ -58,7 +58,7 @@ $("#addchoice").click(function() {
         event.target.id === "ch4-star5" ||
         event.target.id === "ch5-star5") {
       $("#ch1-star5, #ch2-star5, #ch3-star5, #ch4-star5, #ch5-star5")
-        .attr("disabled", "disabled");
+        .attr("readonly", "readonly");
     }
     if (event.target.id === "ch1-star4" ||
         event.target.id === "ch2-star4" ||
@@ -66,7 +66,7 @@ $("#addchoice").click(function() {
         event.target.id === "ch4-star4" ||
         event.target.id === "ch5-star4") {
         $("#ch1-star4, #ch2-star4, #ch3-star4, #ch4-star4, #ch5-star4")
-        .attr("disabled", "disabled");
+        .attr("readonly", "readonly");
     }
     if (event.target.id === "ch1-star3" ||
         event.target.id === "ch2-star3" ||
@@ -74,7 +74,7 @@ $("#addchoice").click(function() {
         event.target.id === "ch4-star3" ||
         event.target.id === "ch5-star3") {
         $("#ch1-star3, #ch2-star3, #ch3-star3, #ch4-star3, #ch5-star3")
-        .attr("disabled", "disabled");
+        .attr("readonly", "readonly");
     }
     if (event.target.id === "ch1-star2" ||
         event.target.id === "ch2-star2" ||
@@ -82,7 +82,7 @@ $("#addchoice").click(function() {
         event.target.id === "ch4-star2" ||
         event.target.id === "ch5-star2") {
         $("#ch1-star2, #ch2-star2, #ch3-star2, #ch4-star2, #ch5-star2")
-        .attr("disabled", "disabled");
+        .attr("readonly", "readonly");
     }
     if (event.target.id === "ch1-star1" ||
         event.target.id === "ch2-star1" ||
@@ -90,7 +90,7 @@ $("#addchoice").click(function() {
         event.target.id === "ch4-star1" ||
         event.target.id === "ch5-star1") {
         $("#ch1-star1, #ch2-star1, #ch3-star1, #ch4-star1, #ch5-star1")
-        .attr("disabled", "disabled");
+        .attr("readonly", "readonly");
     }
    });
    
@@ -147,5 +147,20 @@ $("#addchoice").click(function() {
     addChoice -= 1;
     $("#addchoice").removeAttr("disabled");
   });
+
+  $("#formData").on("submit", function(event) {
+    event.preventDefault();
+    let formData = {};
+    const shortUrl = location.pathname.split('/vl/');
+    const remove = shortUrl.shift();    
+    formData.serialized = $('#formData').serialize();
+    formData.shortUrl = shortUrl; 
+    console.log(formData)
+    // $.ajax(
+    //   '/render/voteSubmission',
+    //   {method: 'POST',
+    //   data: formData,
+    // })
+  })
 });
 

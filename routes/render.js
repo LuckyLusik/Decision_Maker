@@ -5,7 +5,7 @@ const render  = express.Router();
 
 module.exports = (sharedFunctions, knex) => {
 
-    render.post("/vote", function(req, res){
+    render.post("/voteRender", function(req, res){
         console.log("trying to render")
         let pollData; //array containing object
         let choiceData; //array containing object
@@ -53,6 +53,15 @@ module.exports = (sharedFunctions, knex) => {
         })
 
     });
+
+    render.post("/voteSubmission", function(req, res){
+        //validate date by pulling requirements from database:
+        // requirements are whether name is needed, number of votes needed to be case
+        // if duplicate vote were submitted, if voting time is expired.
+        // db call for: verfyName, numberOfVotes, voting time
+        
+
+    })
 
     return render;
 }
