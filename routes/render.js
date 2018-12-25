@@ -2,6 +2,7 @@
 
 const express = require('express');
 const render  = express.Router();
+const moment = require('moment');
 
 module.exports = (sharedFunctions, knex) => {
 
@@ -64,8 +65,46 @@ module.exports = (sharedFunctions, knex) => {
         const body = req.body;
         let pollData;
         let choiceData;
+        const serialized = body.serialized;
+        const shortUrl = body.shortUrl;
+                
+        function hasVotingEnded(){
+            const pollEndTime = moment(pollData[0].end_date).add(5,'hours');
+            const currentTime = new Date()
+
+            if ( moment(pollEndTime).isBefore(currentTime)) { //voting has ended
+                console.log('what time is pollEndTime: ', pollEndTime, currentTime)
+            } else {
+                console.log('No issue with poll time ending')
+                return false;
+            }
+        };
+
+        function nameRequired(){
+            if (pollData[0].name_verfy && serialized[0].value !== ''){
+                verifyInputRequirements();
+            } else {
+                console.error('failed to input name ', pollData[0].name_verfy, serialized[0].value );
+            }
+        };
         
         function verifyInputRequirements(){
+            let voteValue = {};
+            let voteDuplicate = false;
+            let votingEnded = true;
+            for (let i = 1; i < serialized.length; i++){
+                voteValue[serialized[i].value] ? voteDuplicate = true : voteValue[serialized[i].value] = 1; 
+                console.log('render.js Counter: ', i, serialized[i].value)
+              }
+            
+            votingEnded = hasVotingEnded()
+            
+            if (choiceData.length === serialized.length-1 && voteDuplicate === false && votingEnded === false){
+                console.log ("YAY, ITS TRUE AND PASSED")
+            }
+            else{
+                console.log('it didn\'t work')
+            }
 
         }
         
@@ -73,7 +112,7 @@ module.exports = (sharedFunctions, knex) => {
             try{
                 await knex('poll')
                     .select('id','short_url', 'name_verfy', 'end_date')
-                    .where('short_url', body.shortUrl[0])
+                    .where('short_url', shortUrl[0])
                     .then((result) => {
                         pollData = result;
                         console.log('voteSubmission 1: ', pollData)
@@ -95,8 +134,10 @@ module.exports = (sharedFunctions, knex) => {
         findData().then( 
             function(){
                 console.log('Made it to findData.then')
+                nameRequired()
+                
                 //if success on pulling and matching data, redirect to thank you page
-            //res.redirect()//'votingTY.ejs file'
+            //res.redirect('votingTY.ejs)'
         })
     })
 
