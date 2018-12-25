@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var addChoice = 0;
-  // var addChoice = 3;
+  //var addChoice = 3;
 
   // function addNewChoice(choiceNum) {
   //   let newChoiceDiv =
@@ -150,18 +150,27 @@ $("#addchoice").click(function() {
 
   $("#formData").on("submit", function(event) {
     event.preventDefault();
-    
-    const shortUrl = location.pathname.split('/vl/');
-    const remove = shortUrl.shift();    
-    const
     serialized = $('#formData').serializeArray();
-    serialized.shortUrl = shortUrl;
-    console.log('Form Data')
-    $.ajax(
-      '/render/voteSubmission',
-      {method: 'POST',
-      data: serialized,
-    })
+    let voteValue= {};
+    let voteDuplicate = false;
+    const shortUrl = location.pathname.split('/vl/');
+    const remove = shortUrl.shift();        
+    for (let i = 1; i < serialized.length; i++){
+      voteValue[serialized[i].value] ? voteDuplicate = true : voteValue[serialized[i].value] = 1; 
+      console.log('counter: ', i, serialized[i].value)
+    }
+    if (voteDuplicate){
+      console.log('vote clear triggered');
+        $('#formData').trigger('reset')
+    }
+    console.log('formData: ',voteDuplicate, shortUrl, serialized)
+    // $.ajax(
+    //   '/render/voteSubmission',
+    //   {method: 'POST',
+    //   data: { serialized,
+    //     shortUrl,
+    //   }
+    // })
   })
 });
 

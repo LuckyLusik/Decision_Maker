@@ -1,5 +1,18 @@
 //function to Render title and description and end buttons. Tool will utilize 
 
+function validateExpiration(dataObject){
+    const pollData = dataObject.pollData
+    const pollEndTime = moment(pollData[0].end_date).add(5,'hours');
+    const currentTime = new Date()
+
+    if ( moment(pollEndTime).isBefore(currentTime)) {
+        console.log('what time is pollEndTime: ', pollEndTime, currentTime)
+    } else {
+        console.log('No issue with poll time ending')
+        renderVotingPage(dataObject)
+    }
+}
+
 function renderVotingPage(dataObject){
     const pollData = dataObject.pollData;
     const choiceData = dataObject.choiceData;
@@ -110,5 +123,5 @@ $(document).ready(function() {
         '/render/voteRender',
         {method: 'POST',
         data : identifyKey,
-    }).then(renderVotingPage)
+    }).then(validateExpiration)
 });

@@ -59,9 +59,45 @@ module.exports = (sharedFunctions, knex) => {
         // requirements are whether name is needed, number of votes needed to be case
         // if duplicate vote were submitted, if voting time is expired.
         // db call for: verfyName, numberOfVotes, voting time
-        console.log('Hello: ', req.body)
+        console.log('Hello: ', req.body.serialized, req.body.shortUrl)
+        
+        const body = req.body;
+        let pollData;
+        let choiceData;
+        
+        function verifyInputRequirements(){
 
-
+        }
+        
+        async function findData(){
+            try{
+                await knex('poll')
+                    .select('id','short_url', 'name_verfy', 'end_date')
+                    .where('short_url', body.shortUrl[0])
+                    .then((result) => {
+                        pollData = result;
+                        console.log('voteSubmission 1: ', pollData)
+                    })
+                await knex('choice')
+                    .select('title', 'id')
+                    .where('poll_id', pollData[0].id )
+                    .then((result)=> {
+                        choiceData = result;
+                        console.log('voteSubmission 2: ', choiceData)
+                    })
+            }
+            catch (err) {
+                //if error, send error message back to page 
+                console.log(err)
+            }
+            
+        }
+        findData().then( 
+            function(){
+                console.log('Made it to findData.then')
+                //if success on pulling and matching data, redirect to thank you page
+            //res.redirect()//'votingTY.ejs file'
+        })
     })
 
 
