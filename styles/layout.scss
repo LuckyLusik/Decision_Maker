@@ -307,6 +307,10 @@ body {
     font-size: 1.2em;
   }
 
+  .alert {
+    display: none;
+  }
+
   .choice-user-name {
     background-color: $logo-color;
     padding: 1em 2em 2em 2em;
@@ -455,7 +459,7 @@ body {
         border-color: black;
       }
 
-      .newchoice3 {
+      /*.newchoice3 {
         display: none;
       }
 
@@ -465,7 +469,7 @@ body {
 
       .newchoice5 {
         display: none;
-      }
+      }*/
 
       label.remove {
         color: $redhover-background-color;
