@@ -59,9 +59,11 @@ module.exports = (sharedFunctions, knex) => {
         // requirements are whether name is needed, number of votes needed to be case
         // if duplicate vote were submitted, if voting time is expired.
         // db call for: verfyName, numberOfVotes, voting time
-        
+        console.log('Hello: ', req.body)
+
 
     })
+
 
     return render;
 }

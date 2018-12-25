@@ -150,17 +150,18 @@ $("#addchoice").click(function() {
 
   $("#formData").on("submit", function(event) {
     event.preventDefault();
-    let formData = {};
+    
     const shortUrl = location.pathname.split('/vl/');
     const remove = shortUrl.shift();    
-    formData.serialized = $('#formData').serialize();
-    formData.shortUrl = shortUrl; 
-    console.log(formData)
-    // $.ajax(
-    //   '/render/voteSubmission',
-    //   {method: 'POST',
-    //   data: formData,
-    // })
+    const
+    serialized = $('#formData').serializeArray();
+    serialized.shortUrl = shortUrl;
+    console.log('Form Data')
+    $.ajax(
+      '/render/voteSubmission',
+      {method: 'POST',
+      data: serialized,
+    })
   })
 });
 
