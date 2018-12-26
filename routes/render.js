@@ -82,7 +82,7 @@ module.exports = (sharedFunctions, knex) => {
             let voteDuplicate = false;
             let votingEnded = true;
             for (let i = 1; i < serialized.length; i++){
-                voteValue[serialized[i].value] ? voteDuplicate = true : voteValue[serialized[i].value] = 1; 
+                voteValue[serialized[i].value] ? voteDuplicate = true : voteValue[serialized[i].value] = 1;
                 console.log('render.js Counter: ', i, serialized[i].value)
               }
             
@@ -135,15 +135,50 @@ module.exports = (sharedFunctions, knex) => {
             
         }
         findData().then( 
-            function(){
-
-                console.log('Made it to findData.then: ', choiceData, pollData)
-                //nameRequired();
-                console.log(nameRequired());
-                
-                //if success on pulling and matching data, redirect to thank you page
+            async function insertData(){
+                try{ 
+                    console.log('Made it to findData.then: ', choiceData, pollData);            
+                    let verifiedVote = false;
+                    let voteRankArray = [];
+                    let voterIdData = [];
+                    let templateVars = {
+                        votingEndDate: moment(pollData[0].end_date).add(5,'hours'),
+                        shortUrl: shortUrl,
+                    }
+                    
+                    verifiedVote = nameRequired();
+                    console.log(verifiedVote)
+                    if (verifiedVote){
+                        console.log("verified! Lets make data")
+                        let pollVoterData = {name: serialized[0].value, id_url: shortUrl[0]}
+                        let [voterIdDb] = await knex('poll_voter')
+                        .insert(pollVoterData)
+                        .returning('id')
+                        voterIdData.voterIdDb = voterIdDb;
+                        await console.log('Data Review: ', voteRankArray, pollVoterData, voterIdData)
+                        for (let i = 1; i < serialized.length; i++){
+                            voteRankArray.push(
+                                {choice_id: choiceData[i-1].id, value: serialized[i].value, voter_id: voterIdData.voterIdDb}
+                            )
+                        }
+                        await console.log('voteRankArray Review: ', voteRankArray)
+                        voteRankArray.forEach(async function (o){
+                            await knex('rank')
+                            .insert(o)
+                            .returning('id')
+                            return
+                        })
+                        res.render('../views/index.ejs',templateVars)
+                    } 
+                }
+                catch (err){
+                    console.log("find data err", err)
+                }
+            }   
+                      
+            //if success on pulling and matching data, redirect to thank you page
             //res.redirect('votingTY.ejs)'
-        })
+        )
     })
 
 
