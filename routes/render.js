@@ -67,27 +67,16 @@ module.exports = (sharedFunctions, knex) => {
         let choiceData;
         const serialized = body.serialized;
         const shortUrl = body.shortUrl;
-                
-        function hasVotingEnded(){
-            const pollEndTime = moment(pollData[0].end_date).add(5,'hours');
-            const currentTime = new Date()
-
-            if ( moment(pollEndTime).isBefore(currentTime)) { //voting has ended
-                console.log('what time is pollEndTime: ', pollEndTime, currentTime)
-            } else {
-                console.log('No issue with poll time ending')
-                return false;
-            }
-        };
-
+        
+        
         function nameRequired(){
             if (pollData[0].name_verfy && serialized[0].value !== ''){
-                verifyInputRequirements();
+                return verifyInputRequirements();
             } else {
                 console.error('failed to input name ', pollData[0].name_verfy, serialized[0].value );
             }
         };
-        
+
         function verifyInputRequirements(){
             let voteValue = {};
             let voteDuplicate = false;
@@ -100,13 +89,27 @@ module.exports = (sharedFunctions, knex) => {
             votingEnded = hasVotingEnded()
             
             if (choiceData.length === serialized.length-1 && voteDuplicate === false && votingEnded === false){
-                console.log ("YAY, ITS TRUE AND PASSED")
+                return true;
             }
             else{
                 console.log('it didn\'t work')
             }
-
         }
+
+        function hasVotingEnded(){
+            const pollEndTime = moment(pollData[0].end_date).add(5,'hours');
+            const currentTime = new Date()
+
+            if ( moment(pollEndTime).isBefore(currentTime)) { //voting has ended
+                console.log('what time is pollEndTime: ', pollEndTime, currentTime)
+                return true;
+            } else {
+                console.log('No issue with poll time ending')
+                return false;
+            }
+        };
+        
+     
         
         async function findData(){
             try{
@@ -133,8 +136,10 @@ module.exports = (sharedFunctions, knex) => {
         }
         findData().then( 
             function(){
-                console.log('Made it to findData.then')
-                nameRequired()
+
+                console.log('Made it to findData.then: ', choiceData, pollData)
+                //nameRequired();
+                console.log(nameRequired());
                 
                 //if success on pulling and matching data, redirect to thank you page
             //res.redirect('votingTY.ejs)'
