@@ -51,11 +51,11 @@ app.use(express.static("public"));
 //app.use("/api/users", usersRoutes(knex));
 app.use("/", landingRoutes);
 app.use("/pa", pollAdminRoutes);
-app.use("/noPageRoutes", noPageRoutes);
+app.use("/np", noPageRoutes);
 app.use("/vr", voterResultRoutes);
 app.use("/vl", voterVotingRoutes);
-app.use("/pollSetupTY", pollSetupTYRoutes);
-app.use("/votingTYRoutes", votingTYRoutes);
+app.use("/pst", pollSetupTYRoutes);
+app.use("/vty", votingTYRoutes);
 app.use("/testRoutes", testRoutes);
 app.use("/render", renderRoutes);
 
