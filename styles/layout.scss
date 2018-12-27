@@ -272,6 +272,14 @@ body {
   background-color: $backcolor-background-color;
   font-family: 'Muli', sans-serif;
 
+  .taken {
+  color: $backcolor-background-color;
+  }
+  
+  .alert {
+    display: none;
+  }
+  
   h1 {
     color: $logo-color;
     font-weight: 900;

@@ -52,7 +52,7 @@ app.use(express.static("public"));
 app.use("/", landingRoutes);
 app.use("/pa", pollAdminRoutes);
 app.use("/noPageRoutes", noPageRoutes);
-app.use("/voterResult", voterResultRoutes);
+app.use("/vr", voterResultRoutes);
 app.use("/vl", voterVotingRoutes);
 app.use("/pollSetupTY", pollSetupTYRoutes);
 app.use("/votingTYRoutes", votingTYRoutes);

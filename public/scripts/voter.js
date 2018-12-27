@@ -50,6 +50,9 @@ function voteTitleDescription(pollCreator, poll, choice){
         </div>
         </div>
         <hr>
+        <div class="alert alert-danger">
+        <strong>Attention!</strong> This alert box could indicate a dangerous or potentially negative action.
+        </div>
         <div class="form-group row">
         <div class="col-md-12">
             <div class="but-div">
@@ -74,7 +77,7 @@ function votingElement(choice){
         let ratingString = "";
 
         for (let i = voteNum; i > 0; i--) {
-            ratingString +=`<input type="radio" id="ch${j+1}-star${i}" name="ch${j+1}-rating" value="${i}" /><label class = "full" for="ch${j+1}-star${i}" title="${i} stars"></label>`
+            ratingString +=`<input type="radio" id="ch${j+1}-star${i}" name="ch${j+1}-rating" value="${i}" /><label class = "full class${i}" for="ch${j+1}-star${i}" title="${i} stars"></label>`
         }
         
         votingString +=

@@ -7,10 +7,8 @@ module.exports = (sharedFunctions, knex) => {
     //page to display all details as requried by Poll Admin (see input/out flow doc)
     //user will respond to the question
     voterVoting.get("/:id", function(req, res){
-        const templateVars = {
-            urlId: req.params.id,
-        }
-        res.render("../views/voting.ejs")
+       
+       res.render("../views/voting.ejs")
     })
 
     return voterVoting;
