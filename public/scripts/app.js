@@ -26,22 +26,24 @@ $(document).ready(function() {
   $("#poll-info").submit(function(event) {
     event.preventDefault();
     $(".alert, .alert-danger").slideDown("slow");
+    $("input").addClass("redd");
   });
 
   $("#poll-info").on( "keyup", function() {
     $(".alert, .alert-danger").slideUp("slow");
+    $("input").removeClass("redd");
   });
 // -------------------------------------
 
 // index.ejs:
 // On click "Add choice" more choice added
 $("#addchoice").click(function(event) {
-    $(`.newchoice${prevChoice}`).after(addNewChoice(addChoice));
-    $(`.newchoice${addChoice}`).slideDown("slow");
-    $(`#rem${prevChoice}`).css('visibility', 'hidden');
-    addChoice += 1;
-    prevChoice = addChoice - 1;
-  });
+  $(`.newchoice${prevChoice}`).after(addNewChoice(addChoice));
+  $(`.newchoice${addChoice}`).slideDown("slow");
+  $(`#rem${prevChoice}`).css('visibility', 'hidden');
+  addChoice += 1;
+  prevChoice = addChoice - 1;
+});
 
 // Old version:
 // $("#addchoice").click(function(event) {
@@ -100,88 +102,127 @@ $("#addchoice").click(function(event) {
 
 // voting.ejs:
 // On click on the certain star on one choice
-// the same star will be disable on others choices
-  $(".choice_rank").click(function(event) {
-    if (event.target.id === "ch1-star5" ||
-        event.target.id === "ch2-star5" ||
-        event.target.id === "ch3-star5" ||
-        event.target.id === "ch4-star5" ||
-        event.target.id === "ch5-star5") {
-      $("#ch1-star5, #ch2-star5, #ch3-star5, #ch4-star5, #ch5-star5")
-        .attr("disabled", "disabled");
-    }
-    if (event.target.id === "ch1-star4" ||
-        event.target.id === "ch2-star4" ||
-        event.target.id === "ch3-star4" ||
-        event.target.id === "ch4-star4" ||
-        event.target.id === "ch5-star4") {
-        $("#ch1-star4, #ch2-star4, #ch3-star4, #ch4-star4, #ch5-star4")
-        .attr("disabled", "disabled");
-    }
-    if (event.target.id === "ch1-star3" ||
-        event.target.id === "ch2-star3" ||
-        event.target.id === "ch3-star3" ||
-        event.target.id === "ch4-star3" ||
-        event.target.id === "ch5-star3") {
-        $("#ch1-star3, #ch2-star3, #ch3-star3, #ch4-star3, #ch5-star3")
-        .attr("disabled", "disabled");
-    }
-    if (event.target.id === "ch1-star2" ||
-        event.target.id === "ch2-star2" ||
-        event.target.id === "ch3-star2" ||
-        event.target.id === "ch4-star2" ||
-        event.target.id === "ch5-star2") {
-        $("#ch1-star2, #ch2-star2, #ch3-star2, #ch4-star2, #ch5-star2")
-        .attr("disabled", "disabled");
-    }
-    if (event.target.id === "ch1-star1" ||
-        event.target.id === "ch2-star1" ||
-        event.target.id === "ch3-star1" ||
-        event.target.id === "ch4-star1" ||
-        event.target.id === "ch5-star1") {
-        $("#ch1-star1, #ch2-star1, #ch3-star1, #ch4-star1, #ch5-star1")
-        .attr("disabled", "disabled");
-    }
-  });
-
+// the same star will be disable on others choices.
 // When choice was made you cannot click to another star
-// for this choice
-  $(".block1").click(function(event) {
+// for this choice.
+
+  var starNumber = "";
+  var starDig = "";
+  var choiceNumber = "";
+  $(".choice_rank").click(function(event) {
+    starNumber = event.target.id;
+    starDig = starNumber.slice(8);
+    choiceNumber = starNumber.slice(2, 3);
+    for (let i = 1; i <= 5; i++) {
+      $(`.class${starDig}`).addClass("taken");
+      $(`#ch${i}-star${starDig}`).attr("disabled", "disabled");
+    }
+
     if (event.target.value) {
-      $(".block1").css("pointer-events" , "none");
+      $(`.block${choiceNumber}`).css("pointer-events" , "none");
     }
   });
-  $(".block2").click(function(event) {
-    if (event.target.value) {
-      $(".block2").css("pointer-events" , "none");
-    }
-  });
-  $(".block3").click(function(event) {
-    if (event.target.value) {
-      $(".block3").css("pointer-events" , "none");
-    }
-  });
-  $(".block4").click(function(event) {
-    if (event.target.value) {
-      $(".block4").css("pointer-events" , "none");
-    }
-  });
-  $(".block5").click(function(event) {
-    if (event.target.value) {
-      $(".block5").css("pointer-events" , "none");
-    }
-  });
+// Old version:
+    // if (event.target.id === "ch1-star5" ||
+    //     event.target.id === "ch2-star5" ||
+    //     event.target.id === "ch3-star5" ||
+    //     event.target.id === "ch4-star5" ||
+    //     event.target.id === "ch5-star5") {
+    //   $(".class5").addClass("taken");
+    //   $("#ch1-star5, #ch2-star5, #ch3-star5, #ch4-star5, #ch5-star5")
+    //     .attr("disabled", "disabled");
+
+    // }
+    // if (event.target.id === "ch1-star4" ||
+    //     event.target.id === "ch2-star4" ||
+    //     event.target.id === "ch3-star4" ||
+    //     event.target.id === "ch4-star4" ||
+    //     event.target.id === "ch5-star4") {
+    //   $(".class4").addClass("taken");
+    //     $("#ch1-star4, #ch2-star4, #ch3-star4, #ch4-star4, #ch5-star4")
+    //     .attr("disabled", "disabled");
+    // }
+    // if (event.target.id === "ch1-star3" ||
+    //     event.target.id === "ch2-star3" ||
+    //     event.target.id === "ch3-star3" ||
+    //     event.target.id === "ch4-star3" ||
+    //     event.target.id === "ch5-star3") {
+    //   $(".class3").addClass("taken");
+    //     $("#ch1-star3, #ch2-star3, #ch3-star3, #ch4-star3, #ch5-star3")
+    //     .attr("disabled", "disabled");
+    // }
+    // if (event.target.id === "ch1-star2" ||
+    //     event.target.id === "ch2-star2" ||
+    //     event.target.id === "ch3-star2" ||
+    //     event.target.id === "ch4-star2" ||
+    //     event.target.id === "ch5-star2") {
+    //     $(".class2").addClass("taken");
+    //     $("#ch1-star2, #ch2-star2, #ch3-star2, #ch4-star2, #ch5-star2")
+    //     .attr("disabled", "disabled");
+    // }
+    // if (event.target.id === "ch1-star1" ||
+    //     event.target.id === "ch2-star1" ||
+    //     event.target.id === "ch3-star1" ||
+    //     event.target.id === "ch4-star1" ||
+    //     event.target.id === "ch5-star1") {
+    //     $(".class1").addClass("taken");
+    //     $("#ch1-star1, #ch2-star1, #ch3-star1, #ch4-star1, #ch5-star1")
+    //     .attr("disabled", "disabled");
+    // }
+
+
+
+
+  // $(".block1").click(function(event) {
+  //   if (event.target.value) {
+  //     $(".block1").css("pointer-events" , "none");
+  //   }
+  // });
+  // $(".block2").click(function(event) {
+  //   if (event.target.value) {
+  //     $(".block2").css("pointer-events" , "none");
+  //   }
+  // });
+  // $(".block3").click(function(event) {
+  //   if (event.target.value) {
+  //     $(".block3").css("pointer-events" , "none");
+  //   }
+  // });
+  // $(".block4").click(function(event) {
+  //   if (event.target.value) {
+  //     $(".block4").css("pointer-events" , "none");
+  //   }
+  // });
+  // $(".block5").click(function(event) {
+  //   if (event.target.value) {
+  //     $(".block5").css("pointer-events" , "none");
+  //   }
+  // });
 
 // Reset all choices
-  $("#reset-btn").click(function(event) {
-    $(".block1, .block2, .block3, .block4, .block5").css("pointer-events" , "auto");
-    $(".block1, .block2, .block3, .block4, .block5").attr("value" , "");
-    // $(".rating input").attr("checked" , "false");
+$("#reset-btn").click(function(event) {
+  for (let i = 1; i <= 5; i++) {
+    $(`.class${i}`).removeClass("taken");
+    $(`.block${i}`).css("pointer-events" , "auto");
+    $(`.block${i}`).attr("value" , "");
     $( ".rating input" ).prop( "checked", false );
-    // $(".rating input").removeAttr("checked");
-    $("#ch1-star5, #ch2-star5, #ch3-star5, #ch4-star5, #ch5-star5, #ch1-star4, #ch2-star4, #ch3-star4, #ch4-star4, #ch5-star4, #ch1-star3, #ch2-star3, #ch3-star3, #ch4-star3, #ch5-star3, #ch1-star2, #ch2-star2, #ch3-star2, #ch4-star2, #ch5-star2, #ch1-star1, #ch2-star1, #ch3-star1, #ch4-star1, #ch5-star1")
-    .removeAttr("disabled");
-  });
+    for (let j = 1; j <= 5; j++){
+      $(`#ch${i}-star${j}`).removeAttr("disabled");
+    }
+  }
+});
+
+// Old version:
+  // $("#reset-btn").click(function(event) {
+  //   $(".class1, .class2, .class3, .class4, .class5").removeClass("taken");
+  //   $(".block1, .block2, .block3, .block4, .block5").css("pointer-events" , "auto");
+  //   $(".block1, .block2, .block3, .block4, .block5").attr("value" , "");
+  //   // $(".rating input").attr("checked" , "false");
+  //   $( ".rating input" ).prop( "checked", false );
+  //   // $(".rating input").removeAttr("checked");
+  //   $("#ch1-star5, #ch2-star5, #ch3-star5, #ch4-star5, #ch5-star5, #ch1-star4, #ch2-star4, #ch3-star4, #ch4-star4, #ch5-star4, #ch1-star3, #ch2-star3, #ch3-star3, #ch4-star3, #ch5-star3, #ch1-star2, #ch2-star2, #ch3-star2, #ch4-star2, #ch5-star2, #ch1-star1, #ch2-star1, #ch3-star1, #ch4-star1, #ch5-star1")
+  //   .removeAttr("disabled");
+  // });
 
 // --------------------
 

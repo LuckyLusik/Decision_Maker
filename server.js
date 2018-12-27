@@ -44,14 +44,14 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-//app.use("/api/users", usersRoutes(knex)); 
+//app.use("/api/users", usersRoutes(knex));
 app.use("/", landingRoutes);
 app.use("/pollAdmin", pollAdminRoutes);
-app.use("/noPageRoutes", noPageRoutes);
+app.use("/noPage", noPageRoutes);
 app.use("/voterResult", voterResultRoutes);
 app.use("/voterVoting", voterVotingRoutes);
 app.use("/pollSetupTY", pollSetupTYRoutes);
-app.use("/votingTYRoutes", votingTYRoutes);
+app.use("/votingTY", votingTYRoutes);
 
 
 
