@@ -272,6 +272,14 @@ body {
   background-color: $backcolor-background-color;
   font-family: 'Muli', sans-serif;
 
+  .taken {
+  color: $backcolor-background-color;
+  }
+  
+  .alert {
+    display: none;
+  }
+  
   h1 {
     color: $logo-color;
     font-weight: 900;
@@ -305,6 +313,57 @@ body {
   h5 {
     font-weight: 700;
     font-size: 1.2em;
+  }
+
+  .er404 {
+    color: $redhover-background-color;
+    font-size: 10em;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+  .poll-success {
+    color: #3FEEE6;
+    font-size: 10em;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+  .link-style {
+    font-size: 1.3em;
+    color: $logo-color;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    display: block;
+    margin-top: 3em;
+    margin-bottom: 2em;
+  }
+
+  .link-style-nomargin {
+    font-size: 1.3em;
+    color: $logo-color;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    display: block;
+    /*margin-top: 3em;*/
+  }
+
+  .redd {
+    background-color: #ffe1e1;
+  }
+
+  .taken {
+    color: $backcolor-background-color;
+  }
+
+  .alert {
+    display: none;
   }
 
   .choice-user-name {
@@ -360,6 +419,12 @@ body {
 
   .main_descrip {
     font-size: 2em;
+    text-align: center;
+    margin: 0.5em 0 0 0;
+  }
+
+  .main_descrip_smaller {
+    font-size: 1.3em;
     text-align: center;
     margin: 0.5em 0 0 0;
   }
@@ -455,7 +520,7 @@ body {
         border-color: black;
       }
 
-      .newchoice3 {
+      /*.newchoice3 {
         display: none;
       }
 
@@ -465,7 +530,7 @@ body {
 
       .newchoice5 {
         display: none;
-      }
+      }*/
 
       label.remove {
         color: $redhover-background-color;

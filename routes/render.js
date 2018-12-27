@@ -20,7 +20,7 @@ module.exports = (sharedFunctions, knex) => {
                     .where('short_url', urlId[0])
                     .then ((result)=> {
                         pollData = result;
-                        //console.log('Output 1: ', pollData)
+                        console.log('Output 1: ', pollData)
                     })
                         
                 await console.log(pollData[0].id);
@@ -30,7 +30,7 @@ module.exports = (sharedFunctions, knex) => {
                     .where('poll_id', pollData[0].id)
                     .then((result)=> {
                         choiceData = result;
-                        //console.log('Output 2: ', choiceData)
+                        console.log('Output 2: ', choiceData)
                     })
                 
                 await console.log(choiceData[0].id, choiceData[1].id)
@@ -78,17 +78,18 @@ module.exports = (sharedFunctions, knex) => {
         };
 
         function verifyInputRequirements(){
-            let voteValue = {};
-            let voteDuplicate = false;
+            // let voteValue = {};
             let votingEnded = true;
-            for (let i = 1; i < serialized.length; i++){
-                voteValue[serialized[i].value] ? voteDuplicate = true : voteValue[serialized[i].value] = 1;
-                console.log('render.js Counter: ', i, serialized[i].value)
-              }
+            //OLD - was for validation of duplicate
+            // for (let i = 1; i < serialized.length; i++){
+            //     voteValue[serialized[i].value] ? voteDuplicate = true : voteValue[serialized[i].value] = 1;
+            //     console.log('render.js Counter: ', i, serialized[i].value)
+            //   }
             
             votingEnded = hasVotingEnded()
+            console.log('Voting ended: ', hasVotingEnded(), 'Choices: ', choiceData.length, serialized.length-1)
             
-            if (choiceData.length === serialized.length-1 && voteDuplicate === false && votingEnded === false){
+            if (choiceData.length === serialized.length-1 && votingEnded === false){
                 return true;
             }
             else{
@@ -179,8 +180,53 @@ module.exports = (sharedFunctions, knex) => {
             //if success on pulling and matching data, redirect to thank you page
             //res.redirect('votingTY.ejs)'
         )
+    });
+
+    render.post("/voteResult", function(req, res){
+        let pollData; //array containing object
+        let choiceData; //array containing object
+        let pollCreatorData; //array containing object
+        async function findData () { 
+            const urlId = req.body.shortUrl;
+            console.log(urlId)
+            try {
+                await knex('poll')
+                    .select('*')
+                    .where('short_url', urlId[0])
+                    .then ((result)=> {
+                        pollData = result;
+                        //console.log('Output 1: ', pollData)
+                    })
+                        
+                await console.log(pollData[0].id);
+                
+                await knex('choice')
+                    .select('title','description','id')
+                    .where('poll_id', pollData[0].id)
+                    .then((result)=> {
+                        choiceData = result;
+                        //console.log('Output 2: ', choiceData)
+                    })
+                
+                await console.log(choiceData[0].id, choiceData[1].id)
+
+                await knex('poll_creator')
+                    .select('email', 'name')
+                    .where('id', pollData[0].creator_id)
+                    .then ((result) => { 
+                        pollCreatorData = result;
+                        //console.log('Output 3: ', pollCreatorData)
+                    })
+            }
+            catch (err) {
+                console.log(err);
+            };
+        }
+        findData().then(function(){
+            const fullData = {pollData, choiceData, pollCreatorData}
+            console.log('Full Data => ', fullData )
+            res.json(fullData)
+        })
     })
-
-
     return render;
 }

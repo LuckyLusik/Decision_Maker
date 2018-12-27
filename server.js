@@ -48,11 +48,11 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-//app.use("/api/users", usersRoutes(knex)); 
+//app.use("/api/users", usersRoutes(knex));
 app.use("/", landingRoutes);
 app.use("/pa", pollAdminRoutes);
 app.use("/noPageRoutes", noPageRoutes);
-app.use("/voterResult", voterResultRoutes);
+app.use("/vr", voterResultRoutes);
 app.use("/vl", voterVotingRoutes);
 app.use("/pollSetupTY", pollSetupTYRoutes);
 app.use("/votingTYRoutes", votingTYRoutes);
