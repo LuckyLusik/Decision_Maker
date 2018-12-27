@@ -28,6 +28,7 @@ $(document).ready(function() {
     };
   });
 
+<<<<<<< HEAD
 // Old version:
   // $("#rem3").click(function() {
   //   $(".newchoice3").slideUp("slow");
@@ -71,6 +72,40 @@ $(document).ready(function() {
     if (event.target.value) {
       $(`.block${choiceNumber}`).css("pointer-events" , "none");
     }
+=======
+    console.log("choice clicked", document.getElementsByClassName("choice_rank"))
+    
+    $(".choice_rank").click(function(event) {
+      starNumber = event.target.id;
+      starDig = starNumber.slice(8);
+      choiceNumber = starNumber.slice(2, 3);
+      for (let i = 1; i <= numChoices.length; i++) {
+        $(`.class${starDig}`).addClass("taken");
+        $(`#ch${i}-star${starDig}`).attr("disabled", "disabled");
+      }
+      if (event.target.value) {
+        $(`.block${choiceNumber}`).css("pointer-events" , "none");
+      }
+    });
+   
+   $("#reset-btn").click(function(event) {
+     console.log('Reset Button: ', numChoices.length)
+    for (let i = 1; i <= numChoices.length; i++) {
+      $(`.class${i}`).removeClass("taken");
+      $(`.block${i}`).css("pointer-events" , "auto");
+      $(`.block${i}`).attr("value" , "");
+      $( ".rating input" ).prop( "checked", false );
+      for (let j = 1; j <= numChoices.length; j++){
+        $(`#ch${i}-star${j}`).removeAttr("disabled");
+      }
+    }
+  });
+
+
+  $("#rem3").click(function() {
+    $(".newchoice3").slideUp("slow");
+    addChoice -= 1;
+>>>>>>> 1caa466fead096269d8e0825c215ed263e2b0432
   });
 // Old version:
     // if (event.target.id === "ch1-star5" ||
