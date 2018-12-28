@@ -1,7 +1,7 @@
 function sliceSize(dataNum, dataTotal) {
   return (dataNum / dataTotal) * 360;
 }
-function addSlice(sliceSize, pieElement, offset, sliceID, color) {
+function addSlice(sliceSize, pieElement, offset, sliceID, color) { 
   $(pieElement).append("<div class='slice "+sliceID+"'><span></span></div>");
   var offset = offset - 1;
   var sizeRotation = -179 + sliceSize;
@@ -24,7 +24,7 @@ function iterateSlices(sliceSize, pieElement, offset, dataCount, sliceCount, col
   }
 }
 function createPie(dataElement, pieElement) {
-  var listData = [];
+  var listData = [n];
   $(dataElement+" span").each(function() {
     listData.push(Number($(this).html()));
   });

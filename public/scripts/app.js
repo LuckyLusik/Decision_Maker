@@ -43,15 +43,50 @@ $(document).ready(function() {
     // on submit  it auto shows as red. Need code to check blank fields to show red only.
     $("#poll-info").submit(function(event) {
       event.preventDefault();
+      if (document.getElementById("name-adm").value === "") {
+        $("#alert-adm").append(`<p class="rank-ch">Please, enter your name!</p>`);
+        $("#name-adm").addClass("redd");
+      }
+      if (document.getElementById("email-admin").value === "") {
+        $("#alert-adm").append(`<p class="rank-ch">Please, enter an email!</p>`);
+        $("#email-admin").addClass("redd");
+      }
+      if (document.getElementById("end-date").value === "") {
+        $("#alert-adm").append(`<p class="rank-ch">Please, enter an end date!</p>`);
+        $("#end-date").addClass("redd");
+      }
+      if (document.getElementById("end-time").value === "") {
+        $("#alert-adm").append(`<p class="rank-ch">Please, enter an end time!</p>`);
+        $("end-time").addClass("redd");
+      }
+      if (document.getElementById("poll-title").value === "") {
+        $("#alert-adm").append(`<p class="rank-ch">Please, enter a poll title!</p>`);
+        $("#poll-title").addClass("redd");
+      }
+      if (document.getElementById("choice1").value === "") {
+        $("#alert-adm").append(`<p class="rank-ch">Please, enter a title for choice one!</p>`);
+        $("#choice1").addClass("redd");
+      }
+      if (document.getElementById("choice2").value === "") {
+        $("#alert-adm").append(`<p class="rank-ch">Please, enter a title for choice two!</p>`);
+        $("#choice2").addClass("redd");
+      }
       $(".alert, .alert-danger").slideDown("slow");
-      $("input").addClass("redd");
+      
+    });
+
+    $("#poll-info").on("click", function() {
+      $(".alert, .alert-danger").slideUp("slow", function(){
+        $(".rank-ch").remove();
+      });
+      $("input").removeClass("redd");
     });
     
     // when someone starts typing, red is removed
-    $("#poll-info").on( "keyup", function() {
-      $(".alert, .alert-danger").slideUp("slow");
-      $("input").removeClass("redd");
-    });
+    // $("#poll-info").on( "keyup", function() {
+    //   $(".alert, .alert-danger").slideUp("slow");
+    //   $("input").removeClass("redd");
+    // });
 
    $("#reset-btn").click(function(event) {
      console.log('Reset Button: ', numChoices.length)
@@ -96,26 +131,65 @@ $(document).ready(function() {
       }
       serialized = $('#formData').serializeArray();
       let voteValue= {};
+      let checkedChoice = false;
       // let voteDuplicate = false;
       const shortUrl = location.pathname.split('/vl/');
       const remove = shortUrl.shift();
       const voterNameText = voteValue[serialized[0].voter-name];
       
-      if (voterNameText === ""){
-        console.log('vote clear triggered - Blank Name');
-        $(".alert, .alert-danger").slideDown("slow");
-      };
-      console.log('formData: ',shortUrl, serialized)
-      
-      for(let x = 0; x <= numBlocks.length; x++){
-        if (document.getElementsByClassName("block1").style['pointer-events']="auto") {
-          return "there is incomplete field"
-        } 
+      if (document.getElementById("voter-name").value === "") {
+        $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
+        $("input").addClass("redd");
       }
+      for (let z = 1; z <= numChoices.length; z++) {
+        for (let x = 1; x <= numChoices.length; x++) {
+          if ($(`#ch${z}-star${x}`).prop("checked")) {
+            checkedChoice = true;
+          }
+        }
+        if (checkedChoice === false) {
+          $("#check-rank-form").append(`<p class="rank-ch">Please, rank Choice #${z}!</p>`);
+          $(".alert, .alert-danger").slideDown("slow");
+        }
+        checkedChoice = false;
+      }
+      // if (voterNameText === ""){
+      //   console.log('vote clear triggered - Blank Name');
+      //   $(".alert, .alert-danger").slideDown("slow");
+      // };
+      console.log('formData: ',shortUrl, serialized)
+
       
+      // for(let x = 0; x <= numBlocks.length; x++){
+      //   if (document.getElementsByClassName("block1").style['pointer-events']="auto") {
+      //     return "there is incomplete field"
+      //   } 
+      // }
       
-       
-      console.log('TEST TO SEE DATA: ', serialized)
+      // Validation Form of votes:
+  
+  // $("#formData").submit(function(event) {
+  //   event.preventDefault();
+  //   if (document.getElementById("voter-name").value === "") {
+  //     $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
+  //     $("input").addClass("redd");
+  //   }
+  //   for (let z = 1; z <= numChoices.length; z++) {
+  //     for (let x = 1; x <= numChoices.length; x++) {
+  //       if ($(`#ch${z}-star${x}`).prop("checked")) {
+  //         checkedChoice = true;
+  //       }
+  //     }
+  //     if (checkedChoice === false) {
+  //       $("#check-rank-form").append(`<p class="rank-ch">Please, rank Choice #${z}!</p>`);
+  //       $(".alert, .alert-danger").slideDown("slow");
+  //     }
+  //     checkedChoice = false;
+  //   }
+  // });
+
+  
+     
       
       // $.ajax(
       //   '/render/voteSubmission',
@@ -124,5 +198,14 @@ $(document).ready(function() {
       //   shortUrl,
       //   }
       // })
-  })
+  });
+
+  $("#formData").on("click", function() {
+    $(".alert, .alert-danger").slideUp("slow", function(){
+      $(".rank-ch").remove();
+    });
+    $("input").removeClass("redd");
+  });
+       
+
 });

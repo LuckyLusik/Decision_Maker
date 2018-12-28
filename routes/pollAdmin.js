@@ -14,9 +14,9 @@ module.exports = (sharedFunctions, knex) => {
         let pollData;
         let choiceData;
         let pollCreatorData;
-        let choicesTotals = {}; 
+        let choicesTotals = {};
         const shortUrl = req.params.id
-        
+
         async function pullData (shortUrl) {
             console.log(shortUrl);
             try {
@@ -68,25 +68,25 @@ module.exports = (sharedFunctions, knex) => {
                         return choiceTotal;
                     })
                     .then((result) => {
-                        console.log("ChoiceTotal: ", result, choicesTotals, element.id)
-                        choicesTotals[`choice_Id_${element.id}`] = result;
+                        console.log("ChoiceTotal: ", result, choicesTotals, element.title)
+                        choicesTotals[element.title] = result;
                         return choicesTotals
                     })
                     .then((result) => {
                         console.log("Final output: ", result)
-                        return result;    
+                        return result;
                     })
                     .catch((err) => {
                         console.log("error at rankArray". err)
                     })
                 })
-                
+
             }
             catch (err) {
                 console.log("An Error: ", err);
             }
         };
-        
+
         pullData(shortUrl)
         .then((result) => {organizeVoteData(result)})
         .then((result) => {console.log("Second then statement: ", result)})// lesson learned; non-async function like console.log will execute first without result.

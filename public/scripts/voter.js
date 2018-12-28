@@ -50,8 +50,8 @@ function voteTitleDescription(pollCreator, poll, choice){
         </div>
         </div>
         <hr>
-        <div class="alert alert-danger">
-        <strong>Attention!</strong> This alert box could indicate a dangerous or potentially negative action.
+        <div class="alert alert-danger" id="check-rank-form">
+        <strong>Attention!</strong>
         </div>
         <div class="form-group row">
         <div class="col-md-12">
