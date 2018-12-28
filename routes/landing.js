@@ -65,7 +65,7 @@ module.exports = (sharedFunctions, knex) => {
 
         async function noBlanks (name, email, pollTitle, choice1, choice2) {
             try{
-                if (name.trim() === undefined || email === undefined || pollTitle.trim() === undefined || choice1.trim() === undefined || choice2.trim() === undefined ){
+                if (name === undefined || email === undefined || pollTitle === undefined || choice1 === undefined || choice2 === undefined ){
                     //TO-DO will need to notify of Toggle Div for Error
                     //TO-DO need to add urlString to returned ID
                 console.log('DID IT FAIL?')
@@ -102,24 +102,34 @@ module.exports = (sharedFunctions, knex) => {
                     const choice = await knex('choice')
                         .insert(choiceArray)
                         .returning('id')
-
-                    
                 }
             }
             catch(err){
                 //will need to add further err catching 
                 console.log('bad bad', err)
-            }          
+            } 
+            try{
+                console.log('we are down here')
+                return res.redirect("/pst")
+            } catch (err){
+                console.log("res err", err);
+            }     
         }
+        
         //processing the data into the db
         noBlanks (req.body.name, req.body.name, req.body.email, req.body.pollTitle, req.body.choice1, req.body.choice2);
         console.log(templateVars);
         //Sends user into new page with all of the templateVars which is sufficient for the page to load with necessary text.
-        sharedFunctions.mailer(mailBody, (error) => {
+        
+        sharedFunctions.mailer(mailBody, (error, info) => {
             if (error){
                 return console.log('ERROR from email ON LANDING PAGE. EMAIL NOT SENT');
             }
-            res.render('voting', templateVars)
+            else {
+                if (info){
+                    console.log("inside the mailer block!")
+                }
+            }
         })
         
     });

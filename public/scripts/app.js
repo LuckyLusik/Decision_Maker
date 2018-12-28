@@ -1,29 +1,51 @@
 $(document).ready(function() {
-  var addChoice = 0;
+  var addChoice = 3;
+  var prevChoice = 2;
   let numChoices = document.getElementsByClassName("choice_rank");
   let starNumber = "";
   let starDig = "";
   let choiceNumber = "";
 
+  //---------------------------------------------------------------------
+  // for landing page 
 
-  $("#addchoice").click(function() {
-    if (addChoice === 0){
-      $(".newchoice3").slideDown("slow");
-      addChoice += 1;
-    } else {
-      if (addChoice === 1){
-      $(".newchoice4").slideDown("slow");
-      $("#rem3").css('visibility', 'hidden');
-      addChoice += 1;
-      } else {
-        if (addChoice === 2){
-          $(".newchoice5").slideDown("slow");
-          $("#rem4").css('visibility', 'hidden');
-          addChoice += 1;
-          $("#addchoice").attr("disabled", "disabled");
-        }
+  function addNewChoice(choiceNum) {
+    let newChoiceDiv =
+    `<div class="newchoice${addChoice}" style="display: none">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="choice${addChoice}">Choice ${addChoice}:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="choice${addChoice}" placeholder="Enter choice #${addChoice}" name="choice${addChoice}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2 remove" id="rem${addChoice}" for="choice">Remove Choice ${addChoice}</label>
+        <div class="col-sm-10">
+          <textarea type="text" class="form-control" id="descr${addChoice}" placeholder="Enter description for choice #${addChoice} (optional, 150 symbols max)" name="choiceDescription${addChoice}"></textarea>
+        </div>
+      </div>
+    </div>`
+    return newChoiceDiv;
+  }
+
+  $("#addchoice").click(function(event) {
+    $(`.newchoice${prevChoice}`).after(addNewChoice(addChoice));
+    $(`.newchoice${addChoice}`).slideDown("slow");
+    $(`#rem${prevChoice}`).css('visibility', 'hidden');
+    addChoice += 1;
+    prevChoice = addChoice - 1;
+  });
+  
+  //Remove a freshly added choice
+  $("#poll-info").on("click", ".remove", function(event){
+    $(`.newchoice${prevChoice}`).slideUp("slow", function() {
+      $(`.newchoice${prevChoice}`).remove();
+      if (prevChoice >= 3) {
+        $(`#rem${prevChoice-1}`).css('visibility', 'visible');
       }
-    }
+      addChoice -= 1;
+      prevChoice = addChoice - 1;
+    });
   });
 
     console.log("choice clicked", document.getElementsByClassName("choice_rank"))
@@ -42,37 +64,59 @@ $(document).ready(function() {
     });
     // on submit  it auto shows as red. Need code to check blank fields to show red only.
     $("#poll-info").submit(function(event) {
+      let serialized = $('#poll-info').serializeArray();
+      console.log(serialized)
+      // let voteDuplicate = false;
+      const shortUrl = location.pathname.split('/vl/');
+      const remove = shortUrl.shift();
       event.preventDefault();
+      let errorOnPage = false;
       if (document.getElementById("name-adm").value === "") {
         $("#alert-adm").append(`<p class="rank-ch">Please, enter your name!</p>`);
         $("#name-adm").addClass("redd");
+        errorOnPage = true; 
       }
       if (document.getElementById("email-admin").value === "") {
         $("#alert-adm").append(`<p class="rank-ch">Please, enter an email!</p>`);
         $("#email-admin").addClass("redd");
+        errorOnPage = true; 
       }
       if (document.getElementById("end-date").value === "") {
         $("#alert-adm").append(`<p class="rank-ch">Please, enter an end date!</p>`);
         $("#end-date").addClass("redd");
+        errorOnPage = true; 
       }
       if (document.getElementById("end-time").value === "") {
         $("#alert-adm").append(`<p class="rank-ch">Please, enter an end time!</p>`);
         $("end-time").addClass("redd");
+        errorOnPage = true; 
       }
       if (document.getElementById("poll-title").value === "") {
         $("#alert-adm").append(`<p class="rank-ch">Please, enter a poll title!</p>`);
         $("#poll-title").addClass("redd");
+        errorOnPage = true; 
       }
       if (document.getElementById("choice1").value === "") {
         $("#alert-adm").append(`<p class="rank-ch">Please, enter a title for choice one!</p>`);
         $("#choice1").addClass("redd");
+        errorOnPage = true; 
       }
       if (document.getElementById("choice2").value === "") {
         $("#alert-adm").append(`<p class="rank-ch">Please, enter a title for choice two!</p>`);
         $("#choice2").addClass("redd");
+        errorOnPage = true; 
       }
-      $(".alert, .alert-danger").slideDown("slow");
-      
+      if (errorOnPage) {
+        $(".alert, .alert-danger").slideDown("slow");
+        errorOnPage = false;
+      } else {
+        $.ajax(
+          '/',
+          {method: 'POST',
+          data : serialized,
+        })
+      }
+
     });
 
     $("#poll-info").on("click", function() {
@@ -81,14 +125,8 @@ $(document).ready(function() {
       });
       $("input").removeClass("redd");
     });
-    
-    // when someone starts typing, red is removed
-    // $("#poll-info").on( "keyup", function() {
-    //   $(".alert, .alert-danger").slideUp("slow");
-    //   $("input").removeClass("redd");
-    // });
 
-   $("#reset-btn").click(function(event) {
+    $("#reset-btn").click(function(event) {
      console.log('Reset Button: ', numChoices.length)
     for (let i = 1; i <= numChoices.length; i++) {
       $(`.class${i}`).removeClass("taken");
@@ -101,25 +139,8 @@ $(document).ready(function() {
     }
   });
 
-
-  $("#rem3").click(function() {
-    $(".newchoice3").slideUp("slow");
-    addChoice -= 1;
-  });
-
-  $("#rem4").click(function() {
-    $(".newchoice4").slideUp("slow");
-    $("#rem3").css('visibility', 'visible');
-    addChoice -= 1;
-  });
-
-  $("#rem5").click(function() {
-    $(".newchoice5").slideUp("slow");
-    $("#rem4").css('visibility', 'visible');
-    addChoice -= 1;
-    $("#addchoice").removeAttr("disabled");
-  });
-
+//--------------------------------------------------------------------------------------
+  // for voting page only
   $("#formData").on("submit", function(event) {
       event.preventDefault();
       const numBlocks = document.getElementsByClassName("choice_rank")  
@@ -153,51 +174,14 @@ $(document).ready(function() {
         }
         checkedChoice = false;
       }
-      // if (voterNameText === ""){
-      //   console.log('vote clear triggered - Blank Name');
-      //   $(".alert, .alert-danger").slideDown("slow");
-      // };
-      console.log('formData: ',shortUrl, serialized)
-
       
-      // for(let x = 0; x <= numBlocks.length; x++){
-      //   if (document.getElementsByClassName("block1").style['pointer-events']="auto") {
-      //     return "there is incomplete field"
-      //   } 
-      // }
-      
-      // Validation Form of votes:
-  
-  // $("#formData").submit(function(event) {
-  //   event.preventDefault();
-  //   if (document.getElementById("voter-name").value === "") {
-  //     $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
-  //     $("input").addClass("redd");
-  //   }
-  //   for (let z = 1; z <= numChoices.length; z++) {
-  //     for (let x = 1; x <= numChoices.length; x++) {
-  //       if ($(`#ch${z}-star${x}`).prop("checked")) {
-  //         checkedChoice = true;
-  //       }
-  //     }
-  //     if (checkedChoice === false) {
-  //       $("#check-rank-form").append(`<p class="rank-ch">Please, rank Choice #${z}!</p>`);
-  //       $(".alert, .alert-danger").slideDown("slow");
-  //     }
-  //     checkedChoice = false;
-  //   }
-  // });
-
-  
-     
-      
-      // $.ajax(
-      //   '/render/voteSubmission',
-      //   {method: 'POST',
-      //   data: { serialized,
-      //   shortUrl,
-      //   }
-      // })
+      $.ajax(
+        '/render/voteSubmission',
+        {method: 'POST',
+        data: { serialized,
+        shortUrl,
+        }
+      })
   });
 
   $("#formData").on("click", function() {

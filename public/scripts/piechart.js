@@ -53,3 +53,31 @@ function createPie(dataElement, pieElement) {
   }
 }
 createPie(".pieID.legend", ".pieID.pie");
+
+let dataElement = function (results) {
+  let sortable = [];
+  for (let max in result) {
+    sortable.push([max, result[max]]);
+  }
+  sortable.sort(function(a, b) {
+    let orderedList = b[1] - a[1];
+    console.log(orderedList)
+  })
+  let choiceValues = Object.value(orderedList);
+  console.log(choiceValues)
+  return choiceValues
+}
+
+let pieElement = function (results) {
+  let sortable = [];
+  for (let max in result) {
+    sortable.push([max, result[max]]);
+  }
+  sortable.sort(function(a, b) {
+    let orderedList = b[1] - a[1];
+    console.log(orderedList)
+  })
+  let choiceKeys = Object.key(orderedList);
+  console.log(choiceKeys)
+  return choiceKeys
+}

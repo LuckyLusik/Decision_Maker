@@ -228,5 +228,65 @@ module.exports = (sharedFunctions, knex) => {
             res.json(fullData)
         })
     })
+
+    render.post("/voteResultRender", function(req, res){
+        let shortUrl = req.body.shortUrl
+        let pollData;
+        let choiceData;
+        let pollCreatorData;
+        let rankData;
+        console.log('ShortUrl: ', shortUrl)
+
+        async function findData() {
+            try{
+                await knex ('poll')
+                .select('*')
+                .where('short_url', shortUrl[0])
+                .then((result)=> {
+                    pollData = result;
+                })
+                await console.log(pollData);
+                
+                await knex('choice')
+                .select('*')
+                .where('id', pollData[0].creator_id)
+                .then((result) => {
+                    choiceData = result;
+                })
+                await console.log(choiceData);
+
+                await knex('poll_creator')
+                .select('name')
+                .where('id', pollData[0].creator_id)
+                .then((result) => {
+                    pollCreatorData = result;
+                })
+                await console.log(pollCreatorData)
+                
+                await knex('rank')
+                .select('*')
+                .where('id', choiceData[0].poll_id)
+                .then((result) => {
+                    rankData = result;
+                })
+                await console.log(rankData);
+
+                
+            }
+            catch (err){
+                console.log(err);
+            }
+        }
+
+        findData().then( function () {
+            const fullData = {pollData, choiceData, pollCreatorData, rankData}
+            console.log('Full Data => ', fullData )
+            //res.json(fullData)
+        }).catch((err)=>{
+            console.log(err)
+        })
+
+    });
+
     return render;
 }
