@@ -105,7 +105,7 @@ $("#addchoice").click(function(event) {
 // the same star will be disable on others choices.
 // When choice was made you cannot click to another star
 // for this choice.
-
+  var numChoices = document.getElementsByClassName("choice_rank");
   var starNumber = "";
   var starDig = "";
   var choiceNumber = "";
@@ -113,7 +113,7 @@ $("#addchoice").click(function(event) {
     starNumber = event.target.id;
     starDig = starNumber.slice(8);
     choiceNumber = starNumber.slice(2, 3);
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= numChoices.length; i++) {
       $(`.class${starDig}`).addClass("taken");
       $(`#ch${i}-star${starDig}`).attr("disabled", "disabled");
     }
@@ -201,15 +201,44 @@ $("#addchoice").click(function(event) {
 
 // Reset all choices
 $("#reset-btn").click(function(event) {
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= numChoices.length; i++) {
     $(`.class${i}`).removeClass("taken");
     $(`.block${i}`).css("pointer-events" , "auto");
     $(`.block${i}`).attr("value" , "");
     $( ".rating input" ).prop( "checked", false );
-    for (let j = 1; j <= 5; j++){
+    for (let j = 1; j <= numChoices.length; j++){
       $(`#ch${i}-star${j}`).removeAttr("disabled");
     }
   }
+});
+
+// Validation Form of votes:
+let checkedChoice = false;
+$("#form-vote").submit(function(event) {
+  event.preventDefault();
+  if (document.getElementById("voter-name").value === "") {
+    $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
+    $("input").addClass("redd");
+  }
+  for (let z = 1; z <= numChoices.length; z++) {
+    for (let x = 1; x <= numChoices.length; x++) {
+      if ($(`#ch${z}-star${x}`).prop("checked")) {
+        checkedChoice = true;
+      }
+    }
+    if (checkedChoice === false) {
+      $("#check-rank-form").append(`<p class="rank-ch">Please, rank Choice #${z}!</p>`);
+      $(".alert, .alert-danger").slideDown("slow");
+    }
+    checkedChoice = false;
+  }
+});
+
+$("#form-vote").on("click", function() {
+  $(".alert, .alert-danger").slideUp("slow", function(){
+    $(".rank-ch").remove();
+  });
+  $("input").removeClass("redd");
 });
 
 // Old version:
