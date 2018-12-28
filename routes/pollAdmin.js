@@ -15,29 +15,9 @@ module.exports = (sharedFunctions, knex) => {
         let choiceData;
         let pollCreatorData;
         let choicesTotals = {}; 
-        let rankData;
-        let pollVoter;
-
-        // function findRankData(choiceId) {
-        //     console.log('inside findRankData')
-        //     let counter = 0;
-        //     await knex('rank')
-        //     .select('value', 'choice_id', 'voter_id')
-        //     .where('choice_id', choiceId)
-        //     .then ((result) => {
-        //         let rankArray = result;
-        //         rankArray.forEach( (element) => {
-        //             return counter += element.value;
-        //         })
-            
-        //     })
-        //     console.log("findRankData counter output: ", counter)
-        //     return counter; //outputs sum of ranks for a single choice
-        // }
-
-        async function pullData () {
-            const shortUrl = req.params.id
-            
+        const shortUrl = req.params.id
+        
+        async function pullData (shortUrl) {
             console.log(shortUrl);
             try {
                 await knex ('poll')
@@ -63,24 +43,14 @@ module.exports = (sharedFunctions, knex) => {
                     pollCreatorData = result;
                     console.log('pollCreatorData output: ', pollCreatorData)
                 })
-                // await knex('rank')
-                // .select('value', 'choice_id', 'voter_id')
-                // .where('choice_id', choiceData[0].id)
-                // .then ((result) => {
-                //     rankData = result;
-                //     console.log('rankData output: ', rankData)
-                // })
-                // await knex('poll_voter')
-                // .select('name', 'email', 'id_url', 'id')
-                // .where('id', rankData[0].voter_id)
-                // .then ((result) => {
-                //     pollVoter = result;
-                //     console.log('pollVoter output: ', pollVoter)
-                // })
             }
             catch (err) {
                 console.log(err);
             }
+            return choiceData
+        };
+
+        async function organizeVoteData(choiceData){
             try{
                 choiceData.forEach(async (element, index) => {
                     console.log("async: ", element.id, index)
@@ -99,19 +69,28 @@ module.exports = (sharedFunctions, knex) => {
                     })
                     .then((result) => {
                         console.log("ChoiceTotal: ", result, choicesTotals, element.id)
-                        return choicesTotals[`choice_Id_${element.id}`] = result;
+                        choicesTotals[`choice_Id_${element.id}`] = result;
+                        return choicesTotals
+                    })
+                    .then((result) => {
+                        console.log("Final output: ", result)
+                        return result;    
                     })
                     .catch((err) => {
                         console.log("error at rankArray". err)
                     })
-                })    
+                })
+                
             }
             catch (err) {
                 console.log("An Error: ", err);
             }
         };
-        pullData()
         
+        pullData(shortUrl)
+        .then((result) => {organizeVoteData(result)})
+        .then((result) => {console.log("Second then statement: ", result)})// lesson learned; non-async function like console.log will execute first without result.
+        .catch((err)=> {console.log(err)})
     })
 
     pollAdmin.post("/:id", function(req, res){
