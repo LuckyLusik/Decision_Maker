@@ -28,8 +28,8 @@ $(document).ready(function() {
     return newChoiceDiv;
   }
 
-  function renderOnSuccess(html){
-    $('#poll-info').empty().append(html)
+  function renderOnSuccess(location, html){
+    $(location).empty().append(html)
   }
 
 
@@ -121,7 +121,7 @@ $(document).ready(function() {
           data : serialized,
           success: function (data){
             console.log(data)
-            renderOnSuccess(data)
+            renderOnSuccess(data[0], data[1])
           }
         })
       }
@@ -190,6 +190,10 @@ $(document).ready(function() {
         {method: 'POST',
         data: { serialized,
         shortUrl,
+        },
+        success: (data) => {
+          console.log(data)
+          renderOnSuccess(data[0], data[1])
         }
       })
   });

@@ -102,7 +102,6 @@ function votingElement(choice){
     }
     return votingString;
 }
-
 // OLD
 //function ratingElement(aNum){
 //     let ratingString = "";

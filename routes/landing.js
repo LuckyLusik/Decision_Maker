@@ -98,6 +98,8 @@ module.exports = (sharedFunctions, knex) => {
                         <section>
                             <a class="link-style-nomargin" href="http://localhost:8080/vl/${urlString}">Link to poll</a>
                         </section>`;
+                    const injectLocation = '#poll-info'
+                    const jsonResArray = [injectLocation, thankYouPage]
 
                     for (const i in choiceInfo) {
                         if (!choiceInfo[i]) { break; }
@@ -121,7 +123,7 @@ module.exports = (sharedFunctions, knex) => {
                         .returning('id')
                     
                     console.log("page render")
-                    return res.json(thankYouPage);
+                    return res.json(jsonResArray);
                 }
                 
      

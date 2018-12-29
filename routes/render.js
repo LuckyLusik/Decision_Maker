@@ -146,7 +146,16 @@ module.exports = (sharedFunctions, knex) => {
                         votingEndDate: moment(pollData[0].end_date).add(5,'hours'),
                         shortUrl: shortUrl,
                     }
-                    
+                    const htmlString = 
+                    `<section class="main_descrip">
+                        <p>Thank you for voting!</p>
+                    </section>
+                    <section>
+                        <a class="link-style" href="http://localhost:8080/vr/${shortUrl}">Press here to visit voter results page</a>
+                    </section>`;
+                    const insertLocation = "#voteInsert";
+                    const jsonArray = [insertLocation, htmlString];
+
                     verifiedVote = nameRequired();
                     console.log(verifiedVote)
                     if (verifiedVote){
@@ -169,7 +178,7 @@ module.exports = (sharedFunctions, knex) => {
                             .returning('id')
                             return
                         })
-                        res.render('../views/index.ejs',templateVars)
+                        res.json(jsonArray);
                     } 
                 }
                 catch (err){
