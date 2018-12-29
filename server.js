@@ -49,7 +49,6 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 //app.use("/api/users", usersRoutes(knex));
-app.use("/", landingRoutes);
 app.use("/pa", pollAdminRoutes);
 app.use("/np", noPageRoutes);
 app.use("/vr", voterResultRoutes);
@@ -58,16 +57,11 @@ app.use("/pst", pollSetupTYRoutes);
 app.use("/vty", votingTYRoutes);
 app.use("/testRoutes", testRoutes);
 app.use("/render", renderRoutes);
+app.use("/", landingRoutes);
 
 
 
 // Home page
-
-
-
-
-
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

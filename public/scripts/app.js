@@ -28,6 +28,11 @@ $(document).ready(function() {
     return newChoiceDiv;
   }
 
+  function renderOnSuccess(html){
+    $('#poll-info').empty().append(html)
+  }
+
+
   $("#addchoice").click(function(event) {
     $(`.newchoice${prevChoice}`).after(addNewChoice(addChoice));
     $(`.newchoice${addChoice}`).slideDown("slow");
@@ -114,8 +119,13 @@ $(document).ready(function() {
           '/',
           {method: 'POST',
           data : serialized,
+          success: function (data){
+            console.log(data)
+            renderOnSuccess(data)
+          }
         })
       }
+      
 
     });
 

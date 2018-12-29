@@ -13,7 +13,7 @@ module.exports = (sharedFunctions, knex) => {
         res.render("../views/index.ejs");
       });
 
-    landing.post("/", function (req, res) {
+    landing.post("/", async function (req, res) {
         /*
         - validate all datasets incoming, if data is missing Ajax response
         needed to error field
@@ -28,6 +28,7 @@ module.exports = (sharedFunctions, knex) => {
         const urlString = sharedFunctions.urlString(); //for urlID
         const body = req.body;
         const endDate = `${body.endDate} ${body.endHour} ${body.endAmPm}`;
+        
         let checkBox = function () {
             if (req.body.checkbox === 'on'){
                 return true;
@@ -68,7 +69,7 @@ module.exports = (sharedFunctions, knex) => {
                 if (name === undefined || email === undefined || pollTitle === undefined || choice1 === undefined || choice2 === undefined ){
                     //TO-DO will need to notify of Toggle Div for Error
                     //TO-DO need to add urlString to returned ID
-                console.log('DID IT FAIL?')
+                    console.log('DID IT FAIL?')
                 } else {
                     console.log('It passed check');
                     await console.log('Req.body: ', req.body)
@@ -80,7 +81,23 @@ module.exports = (sharedFunctions, knex) => {
                     const choiceDescription = [body.choiceDescription1, body.choiceDescription2, body.choiceDescription3, body.choiceDescription4, 
                     body.choiceDescription5]
                     let choiceArray     = [];
-                    
+                    const thankYouPage = 
+                        `<section>
+                        <span class="glyphicon glyphicon-ok-circle poll-success" aria-hidden="true"></span>
+                        </section>
+                        <section class="main_descrip">
+                            <p>You successfully created a poll.</p>
+                            <p>Confirmation email is sent to you.</p>
+                        </section>
+                        <section>
+                            <a class="link-style" href="http://localhost:8080/pa/${urlString}">Press here to visit admin page</a>
+                        </section>
+                        <section class="main_descrip_smaller">
+                            <p>This is a link to send your friends:</p>
+                        </section>
+                        <section>
+                            <a class="link-style-nomargin" href="http://localhost:8080/vl/${urlString}">Link to poll</a>
+                        </section>`;
 
                     for (const i in choiceInfo) {
                         if (!choiceInfo[i]) { break; }
@@ -102,25 +119,24 @@ module.exports = (sharedFunctions, knex) => {
                     const choice = await knex('choice')
                         .insert(choiceArray)
                         .returning('id')
+                    
+                    console.log("page render")
+                    return res.json(thankYouPage);
                 }
+                
+     
             }
             catch(err){
                 //will need to add further err catching 
                 console.log('bad bad', err)
             } 
-            try{
-                console.log('we are down here')
-                return res.redirect("/pst")
-            } catch (err){
-                console.log("res err", err);
-            }     
         }
         
         //processing the data into the db
         noBlanks (req.body.name, req.body.name, req.body.email, req.body.pollTitle, req.body.choice1, req.body.choice2);
-        console.log(templateVars);
         //Sends user into new page with all of the templateVars which is sufficient for the page to load with necessary text.
-        
+        console.log(templateVars);
+
         sharedFunctions.mailer(mailBody, (error, info) => {
             if (error){
                 return console.log('ERROR from email ON LANDING PAGE. EMAIL NOT SENT');
