@@ -235,6 +235,7 @@ module.exports = (sharedFunctions, knex) => {
         let choiceData;
         let pollCreatorData;
         let rankData;
+        let choicesTotals = {};
         console.log('ShortUrl: ', shortUrl)
 
         async function findData() {
@@ -249,11 +250,11 @@ module.exports = (sharedFunctions, knex) => {
                 
                 await knex('choice')
                 .select('*')
-                .where('id', pollData[0].creator_id)
+                .where('poll_id', pollData[0].id)
                 .then((result) => {
                     choiceData = result;
                 })
-                await console.log(choiceData);
+                await console.log("Log ChoiceData: ",choiceData);
 
                 await knex('poll_creator')
                 .select('name')
@@ -261,27 +262,44 @@ module.exports = (sharedFunctions, knex) => {
                 .then((result) => {
                     pollCreatorData = result;
                 })
-                await console.log(pollCreatorData)
-                
-                await knex('rank')
-                .select('*')
-                .where('id', choiceData[0].poll_id)
-                .then((result) => {
-                    rankData = result;
-                })
-                await console.log(rankData);
-
-                
+                await console.log("Log PollCreatorData: ", pollCreatorData)                
             }
             catch (err){
                 console.log(err);
             }
+            try{
+                choiceData.forEach(async (element, index) => {
+                    console.log("async: ", element.id, index)
+                    await knex('rank')
+                    .select('value', 'choice_id', 'voter_id')
+                    .where('choice_id', element.id)
+                    .then((result) => {
+                        let rankArray = result;
+                        let choiceTotal = 0;
+                        console.log("what is rankArray? ", rankArray)
+                        rankArray.forEach( (e) => {
+                            choiceTotal += e.value;
+                            console.log("Inside Rank Array: ", choiceTotal, e.value)
+                        })
+                        return choiceTotal;
+                    })
+                    .then((result) => {
+                        console.log("ChoicesTotals: ", element.title, result, choicesTotals )
+                        choicesTotals[element.title] = result;
+                        return choicesTotals
+                    })
+                });
+            }
+            catch (err){
+
+
+            }
         }
 
-        findData().then( function () {
-            const fullData = {pollData, choiceData, pollCreatorData, rankData}
-            console.log('Full Data => ', fullData )
-            //res.json(fullData)
+        findData().then( async function (result) {
+            const fullData = {pollData, choiceData, pollCreatorData, result}
+            await console.log('Full Data => ', fullData )
+            res.json(fullData)
         }).catch((err)=>{
             console.log(err)
         })

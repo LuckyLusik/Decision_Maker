@@ -17,9 +17,10 @@
         const pollData = dataObject.pollData;
         const choiceData = dataObject.choiceData;
         const pollCreatorData = dataObject.pollCreatorData;
-        const rankData = dataObject.rankData;
+        //const rankData = dataObject.rankData;
+        const choicesTotals = dataObject.choicesTotals;
         const pollVoter = dataObject.pollVoter;
-        $("#resultsInsert").prepend(rednerResultsPage(pollCreatorData, pollData, choiceData, rankData, pollVoter))
+        $("#resultsInsert").prepend(resultsTitleDescriptionTime(pollCreatorData, pollData, choiceData, choicesTotals, pollVoter)) //
     }
 
 
