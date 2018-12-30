@@ -11,19 +11,18 @@ module.exports = (sharedFunctions, knex) => {
         let pollData; //array containing object
         let choiceData; //array containing object
         let pollCreatorData; //array containing object
+        const urlId = req.body.shortUrl;
         async function findData () { 
-            const urlId = req.body.shortUrl;
-            console.log(urlId)
+            console.log('Data review: ',urlId[0], pollData, choiceData, pollCreatorData)
             try {
+                console.log(urlId)
                 await knex('poll')
                     .select('*')
                     .where('short_url', urlId[0])
                     .then ((result)=> {
                         pollData = result;
-                        console.log('Output 1: ', pollData)
+                        console.log('Vote Render Output 1: ', pollData, result)
                     })
-                        
-                await console.log(pollData[0].id);
                 
                 await knex('choice')
                     .select('title','description','id')
@@ -147,7 +146,11 @@ module.exports = (sharedFunctions, knex) => {
                         shortUrl: shortUrl,
                     }
                     const htmlString = 
-                    `<section class="main_descrip">
+                    `
+                    <section>
+                        <span class="glyphicon glyphicon-send poll-success" aria-hidden="true"></span>
+                    </section>
+                    <section class="main_descrip">
                         <p>Thank you for voting!</p>
                     </section>
                     <section>

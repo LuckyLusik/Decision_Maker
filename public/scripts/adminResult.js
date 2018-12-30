@@ -112,11 +112,13 @@ function sliceSize(dataNum, dataTotal) {
         const pollCreatorData = dataObject[2];
         //const rankData = dataObject.rankData;
         const choicesTotals = dataObject[3];
+        const voterNameData = dataObject[4]; 
         let choicesResultArray = sortChoicesResult(choicesTotals); // Array in array. Largest value will be in position 0, [[key0, value0],[key1,value1], ... ]
         renderString = "";
         console.log("Inside renderResultPage: ", dataObject, choicesResultArray);
         resultsTitleDescriptionTime(pollCreatorData, pollData, choiceData, choicesResultArray);
         resultsPieChart(choiceData, choicesResultArray);
+        choiceUserName(voterNameData);
         $(".main_descrip").append(renderString) //
         createPie(".pieID.legend", ".pieID.pie");
     }
@@ -149,8 +151,34 @@ function sliceSize(dataNum, dataTotal) {
         `
     };
 
+    function choiceUserName (voterNameData){
+      console.log("inside Choice user Name", voterNameData)
+      let eachVoterLoop = 
+      `<section class="choice-user-name">
+      <table>
+        <caption>Voter Summary</caption>
+        <thead>
+          <tr>
+           
+          </tr>
+        </thead>
+        <tbody>`;
+      for (let eachName of voterNameData){
+        eachVoterLoop +=
+        `<tr>
+        <td data-label="Voter's Name">${eachName.name}</td>
+        </tr>`
+      };
+      eachVoterLoop += 
+      `  </tbody>
+        </table>
+      </section>`
+
+      return renderString += eachVoterLoop
+    }
+
     function resultsPieChart(choicesData, choicesResultArray) {
-        console.log("reasults PieChart: ", choicesResultArray)
+        console.log("results PieChart: ", choicesResultArray)
         let loopString = 
         `<li>
         <em>${choicesData[0].title}: ${choicesData[0].description}</em>

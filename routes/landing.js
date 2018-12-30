@@ -98,7 +98,7 @@ module.exports = (sharedFunctions, knex) => {
                         <section>
                             <a class="link-style-nomargin" href="http://localhost:8080/vl/${urlString}">Link to poll</a>
                         </section>`;
-                    const injectLocation = '#poll-info'
+                    const injectLocation = '.holder'
                     const jsonResArray = [injectLocation, thankYouPage]
 
                     for (const i in choiceInfo) {

@@ -29,7 +29,7 @@ $(document).ready(function() {
   }
 
   function renderOnSuccess(location, html){
-    $(location).empty().append(html)
+    $(location).empty().append(html);
   }
 
 
@@ -167,10 +167,12 @@ $(document).ready(function() {
       const shortUrl = location.pathname.split('/vl/');
       const remove = shortUrl.shift();
       const voterNameText = voteValue[serialized[0].voter-name];
-      
+      let checkedName = true //new
+
       if (document.getElementById("voter-name").value === "") {
         $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
         $("input").addClass("redd");
+        checkedName = false; //new
       }
       for (let z = 1; z <= numChoices.length; z++) {
         for (let x = 1; x <= numChoices.length; x++) {
@@ -180,11 +182,14 @@ $(document).ready(function() {
         }
         if (checkedChoice === false) {
           $("#check-rank-form").append(`<p class="rank-ch">Please, rank Choice #${z}!</p>`);
+        }
+        if (checkedName === false || checkedChoice === false){
           $(".alert, .alert-danger").slideDown("slow");
         }
-        checkedChoice = false;
       }
-      
+      checkedChoice = false;
+      checkedName = true;
+
       $.ajax(
         '/render/voteSubmission',
         {method: 'POST',
