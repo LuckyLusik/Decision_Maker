@@ -14,7 +14,7 @@
     <title>Decision Maker. Admin Page</title>
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
   </head>
 
   <body>
@@ -22,92 +22,13 @@
       <%- include partials/_header.ejs %>
 
     <section class="main_descrip">
-      <p>Welcome to ##'s Poll Result Page!</p>
-    </section>
-    <section class="vote-descr">
-      <h3>Poll Title</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </section>
+  
 
-<!-- pie chart -->
-    <section class="piechart">
-      <div class="pie-graph">
-        <div>
-      <div class="pieID pie">
-
-      </div>
-      </div>
-      <div class="leader">
-        <h2>Leader: </h2>
-        <h2>Choice ##</h2>
-        <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</h5>
-      </div>
-      </div>
-      <section class="expire">
-        <h3>Expire in ## / Ended at ##</h3>
-        <button id="stop-poll" type="button" class="btn btn-default">Stop Poll Now</button>
-      </section>
-      <ul class="pieID legend">
-        <li>
-          <em>Choice 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-          <span id="ch1-pie">718</span>
-        </li>
-        <li>
-          <em>Choice 2: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-          <span>531</span>
-        </li>
-        <li>
-          <em>Choice 3: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-          <span>868</span>
-        </li>
-        <li>
-          <em>Choice 4: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-          <span>344</span>
-        </li>
-        <li>
-          <em>Choice 5: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-          <span>1145</span>
-        </li>
-      </ul>
-    </section>
-
-
-<!-- end of pie chart -->
-    <section class="choice-user-name">
-      <table>
-        <caption>Poll's Summary</caption>
-        <thead>
-          <tr>
-            <th scope="col">Voter's Name</th>
-            <th scope="col">Choice #</th>
-            <th scope="col">Time of Submition</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-label="Voter's Name">John</td>
-            <td data-label="Choice #">1</td>
-            <td data-label="Time of Submition">11:24 PM 2018-12-11</td>
-          </tr>
-          <tr>
-            <td scope="row" data-label="Voter's Name">Michael</td>
-            <td data-label="Choice #">4</td>
-            <td data-label="Time of Submition">10:34 AM 2018-11-10</td>
-          </tr>
-          <tr>
-            <td scope="row" data-label="Voter's Name">Anon</td>
-            <td data-label="Choice #">3</td>
-            <td data-label="Time of Submition">11:24 PM 2018-12-11</td>
-          </tr>
-        </tbody>
-      </table>
-
-    </section>
-
-
+    </section>  
     </section>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../scripts/piechart.js"></script>
+    <script type="text/javascript" src="../scripts/adminResult.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
   </body>
 </html>

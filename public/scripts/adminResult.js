@@ -174,12 +174,12 @@ $(document).ready(function() {
     console.log("Results.js has loaded")
     let identifyKey = {};
     let renderString= "";
-    const shortUrl = location.pathname.split('/vr/');
+    const shortUrl = location.pathname.split('/pa/');
     const remove = shortUrl.shift();
     identifyKey.shortUrl = shortUrl; 
     console.log('identifyKey.shortUrl: ', identifyKey.shortUrl)
     $.ajax(
-        '/render/voteResult',
+        '/render/adminResult',
         {method: 'POST',
         data : identifyKey,
     }).then((result)=>(renderResultsPage(result)))

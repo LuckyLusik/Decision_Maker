@@ -196,7 +196,6 @@ module.exports = (sharedFunctions, knex) => {
         let pollData;
         let choiceData;
         let pollCreatorData;
-        let rankTotals;
         let choicesTotals = {};
         const shortUrl = req.body.shortUrl[0]
         console.log("Inside VoteResult: ",req.body)
@@ -280,6 +279,107 @@ module.exports = (sharedFunctions, knex) => {
             }
         }
 
+        pullData(shortUrl)
+        .then((data) => organizeVoteData(data))
+        .then((data1)=> sendResults(data1))
+        .catch((err) => {console.log('Pull Data Error: ', err)}) 
+    });
+
+    render.post("/adminResult", function(req, res){
+        //these will be arrays containing objects
+        let pollData;
+        let choiceData;
+        let pollCreatorData;
+        let pollVoterData;
+        let choicesTotals = {};
+        const shortUrl = req.body.shortUrl[0]
+        console.log("Inside Admin Result: ",req.body)
+
+        const pullData = async function (shortUrl) {
+            console.log(shortUrl);
+            try {
+                await knex ('poll')
+                .select('*')
+                .where('short_url', shortUrl)
+                .then ((result)=> {
+                    pollData = result;
+                    //this info is to show admin poll owner, poll title, poll description, endDate, whether name is required
+                    console.log('pollData output: ', pollData)
+                })
+                await knex('choice')
+                .select('title','description','id')
+                .where('poll_id', pollData[0].id)
+                .then((result)=> {
+                    choiceData = result;
+                    //we want choice title, choice description, poll_id for reference
+                    console.log('choiceData output: ', choiceData)
+                })
+                await knex('poll_creator')
+                .select('email', 'name')
+                .where('id', pollData[0].creator_id)
+                .then ((result) => {
+                    pollCreatorData = result;
+                    console.log('pollCreatorData output: ', pollCreatorData)
+                })
+                await knex('poll_voter')
+                .select('name')
+                .where('id_url', shortUrl)
+                .then((result) => {
+                    pollVoterData = result;
+                    console.log('pollVoterData output: ', pollVoterData)
+                })
+            }
+            catch (err) {
+                console.log(err);
+            }
+            return choiceData
+        };
+
+        const organizeVoteData = async function (choiceData){
+            try{
+                await Promise.all(choiceData.map (async (element) => {
+                    console.log("async: ", element.id)
+                    let choiceSum = await knex('rank')
+                    .select('value', 'choice_id', 'voter_id')
+                    .where('choice_id', element.id)
+                    .then(async(result) => {
+                        let rankArray = result;
+                        let choiceTotal = 0;
+                        console.log("what is rankArray? ", rankArray)
+                        rankArray.forEach( (e) => {
+                            choiceTotal += e.value;
+                            console.log("Inside Rank Array: ", choiceTotal, e.value)
+                        })
+                        console.log('forEach ChoiceTotal: ', choiceTotal)
+                        return choiceTotal;
+                    })
+                    .then(async(result) => {
+                        choicesTotals[element.title] = result;
+                        console.log("ChoicesTotals: ", result, element.title, choicesTotals)
+                        return choicesTotals
+                    })
+                    .catch((err) => {
+                        console.log("error at rankArray". err)
+                    })
+                }))
+                return choicesTotals;
+            }
+            catch (err) {
+                console.log("An Error: ", err);
+            }
+        };
+        
+        const sendResults = async function (data){
+            try{ 
+                console.log("At sendResults: ", data);
+                let sendData = [pollData, choiceData, pollCreatorData, data, pollVoterData] 
+                console.log('Inside transmitData: ', sendData);
+                return res.json(sendData)
+            }
+            catch(err) {
+                console.log("Transmit error ", err)
+            }
+        }
         pullData(shortUrl)
         .then((data) => organizeVoteData(data))
         .then((data1)=> sendResults(data1))

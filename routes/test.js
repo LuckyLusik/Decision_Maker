@@ -10,7 +10,7 @@ module.exports = (sharedFunctions, knex) => {
     // Details captured will be fed to all subsequent pages to display relevent data
     
     test.get("/", function (req, res) {
-        res.render("../views/resultsTest.ejs")
+        res.render("../views/pollAdminTest.ejs")
     });
     return test;
 }
