@@ -53,7 +53,7 @@ $(document).ready(function() {
     });
   });
 
-    console.log("choice clicked", document.getElementsByClassName("choice_rank"))
+    //console.log("choice clicked", document.getElementsByClassName("choice_rank"))
     
     $(".choice_rank").click(function(event) {
       starNumber = event.target.id;

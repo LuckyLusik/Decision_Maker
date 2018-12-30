@@ -1,8 +1,10 @@
+
+// Pie chart functions
+//----------------------------------------------------
 function sliceSize(dataNum, dataTotal) {
     return (dataNum / dataTotal) * 360;
-}
-  
-function addSlice(sliceSize, pieElement, offset, sliceID, color) { 
+  }
+  function addSlice(sliceSize, pieElement, offset, sliceID, color) { 
     $(pieElement).append("<div class='slice "+sliceID+"'><span></span></div>");
     var offset = offset - 1;
     var sizeRotation = -179 + sliceSize;
@@ -13,9 +15,8 @@ function addSlice(sliceSize, pieElement, offset, sliceID, color) {
       "transform"       : "rotate("+sizeRotation+"deg) translate3d(0,0,0)",
       "background-color": color
     });
-}
-
-function iterateSlices(sliceSize, pieElement, offset, dataCount, sliceCount, color) {
+  }
+  function iterateSlices(sliceSize, pieElement, offset, dataCount, sliceCount, color) {
     var sliceID = "s"+dataCount+"-"+sliceCount;
     var maxSize = 179;
     if(sliceSize<=maxSize) {
@@ -24,9 +25,8 @@ function iterateSlices(sliceSize, pieElement, offset, dataCount, sliceCount, col
       addSlice(maxSize, pieElement, offset, sliceID, color);
       iterateSlices(sliceSize-maxSize, pieElement, offset+maxSize, dataCount, sliceCount+1, color);
     }
-}
-  
-function createPie(dataElement, pieElement) {
+  }
+  function createPie(dataElement, pieElement) {
     var listData = [];
     $(dataElement+" span").each(function() {
       listData.push(Number($(this).html()));
@@ -54,10 +54,9 @@ function createPie(dataElement, pieElement) {
       $(dataElement+" li:nth-child("+(i+1)+")").css("border-color", color[i]);
       offset += size;
     }
-}
-    createPie(".pieID.legend", ".pieID.pie");
-//note the execution above. Is tied to the html?  
-
+  }
+  createPie(".pieID.legend", ".pieID.pie");
+  
   let dataElement = function (results) {
     let sortable = [];
     for (let max in result) {
@@ -85,25 +84,47 @@ function createPie(dataElement, pieElement) {
     console.log(choiceKeys)
     return choiceKeys
   }
-    
 
-    function renderResultsPage(dataObject){
-        const pollData = dataObject.pollData;
-        const choiceData = dataObject.choiceData;
-        const pollCreatorData = dataObject.pollCreatorData;
-        //const rankData = dataObject.rankData;
-        const choicesTotals = dataObject.choicesTotals;
-        console.log("Inside renderResultPage: ", dataObject)
-        $("#voteInsert").append(resultsTitleDescriptionTime(pollCreatorData, pollData, choiceData)) //
+// html rendering functions below
+//------------------------------------------
+
+    function sortChoicesResult(choicesTotals){
+        const sorted = [];
+        for (let choice in choicesTotals){
+            sorted.push([choice, choicesTotals[choice]])
+        }
+        sorted.sort(function(a,b){
+            return b[1] - a[1];
+        })
+        return sorted;
+    }
+    function matchTitle(title,choicesResultArray){
+        for (let each of choicesResultArray){
+            if (title === each[0]){
+                return each[1];
+            }
+        };
     }
 
+    function renderResultsPage(dataObject){
+        const pollData = dataObject[0];
+        const choiceData = dataObject[1];
+        const pollCreatorData = dataObject[2];
+        //const rankData = dataObject.rankData;
+        const choicesTotals = dataObject[3];
+        let choicesResultArray = sortChoicesResult(choicesTotals); // Array in array. Largest value will be in position 0, [[key0, value0],[key1,value1], ... ]
+        renderString = "";
+        console.log("Inside renderResultPage: ", dataObject, choicesResultArray);
+        resultsTitleDescriptionTime(pollCreatorData, pollData, choiceData, choicesResultArray);
+        resultsPieChart(choiceData, choicesResultArray);
+        $(".main_descrip").append(renderString) //
+        createPie(".pieID.legend", ".pieID.pie");
+    }
 
-
-    function resultsTitleDescriptionTime(pollCreator, poll){
+    function resultsTitleDescriptionTime(pollCreator, poll, choice, winner){
         console.log(pollCreator, poll, choice);
         return renderString =
-        `<section class="main_descrip">
-            <p>Welcome to ${pollCreator[0].name}'s Poll Page!</p>
+        `<p>Welcome to ${pollCreator[0].name}'s Poll Page!</p>
         </section>
         <section class="vote-descr">
             <h3>${poll[0].title}</h3>
@@ -111,104 +132,43 @@ function createPie(dataElement, pieElement) {
         </section>
         <section class="expire">
             <h3>Expiration: ${moment(poll[0].end_date).add(5,'hours').fromNow()}</h3>
-        </section>`
-    };
-
-    function resultsPieChart(choice, rank, pollVoter) {
-    console.log(choice, rank, pollVoter)
-    return renderString +=
-    `<section class="piechart">
+        </section>
+        <section class="piechart">
         <div class="pie-graph">
         <div>
-        <div class="pieID pie" ${findObjectValues(results)}>
+        <div class="pieID pie">
 
         </div>
         </div>
         <div class="leader">
         <h2>Leader: </h2>
-        <h2>Choice ##</h2>
-        <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</h5>
+        <h2>${winner[0][0]}</h2>
         </div>
         </div>
-        <section class="expire">
-            <h3>Expire in ## / Ended at ##</h3>
-        </section>
-        <ul class="pieID legend" ${findObjectKeys(results)}>
-        <li>
-            <em>Choice 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-            <span id="ch1-pie">718</span>
-        </li>
-        <li>
-            <em>Choice 2: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-            <span id ="ch2-pie">531</span>
-        </li>
-        <li>
-            <em>Choice 3: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-            <span id="ch3-pie">868</span>
-        </li>
-        <li>
-            <em>Choice 4: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-            <span id="ch4-pie">344</span>
-        </li>
-        <li>
-            <em>Choice 5: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
-            <span id="ch5-pie">1145</span>
-        </li>
-        </ul>
-    </section>`
+        <ul class="pieID legend">
+        <script type="text/javascript" src="/scripts/app.js"></script>
+        <script type="text/javascript" src="../scripts/piechart.js"></script>`
+    };
+
+    function resultsPieChart(choicesData, choicesResultArray) {
+        console.log("reasults PieChart: ", choicesResultArray)
+        let loopString = 
+        `<li>
+        <em>${choicesData[0].title}: ${choicesData[0].description}</em>
+        <span id="ch1-pie">${matchTitle(choicesData[0].title, choicesResultArray)}</span>
+        </li>`;
+
+        for (let i = 1; i < choicesData.length; i++) {
+            console.log('each: ', choicesData[i].title)
+            loopString += 
+            `<li>
+            <em>${choicesData[i].title}: ${choicesData[i].description}</em>
+            <span>${matchTitle(choicesData[i].title, choicesResultArray)}</span>
+            </li>`
+        }
+        loopString += `</ul> </section>`
+        return renderString += loopString;
     }
-
-
-        //".pieID.legend" is DataElement in piechart.js
-        //this function needs organizeVoteData(choiceData) from pollAdmin to work
-        // to separate values from greatest to least into an array
-        
-    // function findObjectValues(results) {
-    // let sortable = [];
-    // for (let max in result) {
-    //     sortable.push([max, result[max]]);
-    // }
-    // sortable.sort(function(a, b) {
-    //     let orderedList = b[1] - a[1];
-    //     console.log(orderedList)
-    // })
-    // let choiceValues = Object.value(orderedList);
-    // console.log(choiceValues)
-    // return choiceValues
-    // }
-
-    // //".pieID.pie" is pieElement in piechart.js
-    // //this function needs organizeVoteData(choiceData) from pollAdmin to work
-    // //to separate keys from greatest to least into an array
-    // function findObjectKeys(results) {
-    // let sortable = [];
-    // for (let max in result) {
-    //     sortable.push([max, result[max]]);
-    // }
-    // sortable.sort(function(a, b) {
-    //     let orderedList = b[1] - a[1];
-    //     console.log(orderedList)
-    // })
-    // let choiceKeys = Object.key(orderedList);
-    // console.log(choiceKeys)
-    // return choiceKeys
-    // }
-
-
-    // //use this function to input titles and descriptions into results pie chart
-    // function choiceTitleDescriptions (titles, descriptions) {
-    // //loop through titles and show them
-    // //loop through descriptions and show them
-    // }
-    // choiceTitleDescriptions(findObjectValues(results))
-
-
-    // //use this function to input rank totals for each choice
-    // function choiceRankTotals (rankTotals) {
-    // //loop through totals and display them
-    // }
-    
-    // choiceRankTotals(findObjectKeys(results));
 
 
 $(document).ready(function() {
@@ -223,5 +183,5 @@ $(document).ready(function() {
         '/render/voteResult',
         {method: 'POST',
         data : identifyKey,
-    }).then(renderResultsPage)
+    }).then((result)=>(renderResultsPage(result)))
 })
