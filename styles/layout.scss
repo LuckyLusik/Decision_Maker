@@ -268,6 +268,8 @@ table th {
 End of table
 */
 
+
+
 body {
   background-color: $backcolor-background-color;
   font-family: 'Muli', sans-serif;
@@ -536,8 +538,90 @@ body {
   }
 
 
+}
 
+@media screen and (max-width: 800px) {
+  body {
+    h4 {
+      font-size: 1.5em;
+    }
 
+    .formSub .add-choice button {
+      width: 100%;
+    }
+
+    .formSub .but-div button{
+      width: 100%;
+    }
+  }
+
+  .rating > label:before {
+    font-size: 1.5em;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  body {
+
+    h1 {
+      font-size: 2.3em;
+    }
+
+    h2 {
+      font-size: 1.5em;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+
+    h4 {
+      width: 100%;
+    }
+
+    .logo {
+      height: 70px;
+      width: 70px;
+    }
+
+    .main_descrip {
+      font-size: 1.5em;
+    }
+
+    .choice_rank {
+      display: block;
+    }
+
+    .expire {
+      display: block;
+    }
+
+    .expire button {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+    .rating > label {
+      float: none;
+    }
+
+    .rating {
+    width: 100%;
+    }
+
+    .pie-graph {
+      display: block;
+    }
+
+    .pie {
+      margin-left: 10vw;
+    }
+
+    .leader {
+      width: 100%;
+    }
 }
 
 
