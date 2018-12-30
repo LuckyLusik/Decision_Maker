@@ -214,11 +214,13 @@ $("#reset-btn").click(function(event) {
 
 // Validation Form of votes:
 let checkedChoice = false;
+let checkedName = true;
 $("#form-vote").submit(function(event) {
   event.preventDefault();
   if (document.getElementById("voter-name").value === "") {
     $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
     $("input").addClass("redd");
+    checkedName = false;
   }
   for (let z = 1; z <= numChoices.length; z++) {
     for (let x = 1; x <= numChoices.length; x++) {
@@ -228,10 +230,13 @@ $("#form-vote").submit(function(event) {
     }
     if (checkedChoice === false) {
       $("#check-rank-form").append(`<p class="rank-ch">Please, rank Choice #${z}!</p>`);
+    }
+    if (checkedName === false || checkedChoice === false) {
       $(".alert, .alert-danger").slideDown("slow");
     }
-    checkedChoice = false;
   }
+    checkedChoice = false;
+    checkedName = true;
 });
 
 $("#form-vote").on("click", function() {
@@ -254,6 +259,25 @@ $("#form-vote").on("click", function() {
   // });
 
 // --------------------
+
+// results.ejs
+
+function addChoiceResult() {
+    let newChoiceRes =
+    `<li>
+        <em>Choice 5: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</em>
+        <span id="ch5-pie">20</span>
+      </li>`
+    return newChoiceRes;
+  }
+
+$("#pie4").after(addChoiceResult());
+
+// document.getElementById("ch1-pie").innerHTML = "20";
+// document.getElementById("ch2-pie").innerHTML = "15";
+// document.getElementById("ch3-pie").innerHTML = "10";
+// document.getElementById("ch4-pie").innerHTML = "9";
+// document.getElementById("ch5-pie").innerHTML = "8";
 
 });
 
