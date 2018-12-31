@@ -21,7 +21,11 @@ function renderVotingPage(dataObject){
 }
 
 function voteTitleDescription(pollCreator, poll, choice){
-    console.log(pollCreator, poll, choice);
+    console.log("From voteTitleDescription: ", pollCreator, poll, choice, poll[0].name_verfy);
+    let nameReq = "false";
+    if (poll[0].name_verfy){
+        nameReq = "true";
+    }
     return renderString =
     `<section class="main_descrip">
         <p>Welcome to ${pollCreator[0].name}'s Poll Page!</p>
@@ -39,6 +43,7 @@ function voteTitleDescription(pollCreator, poll, choice){
         <div class="col-sm-10">
             <input type="text" class="form-control" id="voter-name" name="voter-name" placeholder="Enter your name">
         </div>
+        <div id='reqName' data-nameReq=${nameReq}></div>
         </div>
         <hr>
         ${votingElement(choice)}

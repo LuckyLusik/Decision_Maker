@@ -69,11 +69,16 @@ module.exports = (sharedFunctions, knex) => {
         
         
         function nameRequired(){
-            if (pollData[0].name_verfy && serialized[0].value !== ''){
-                return verifyInputRequirements();
+            if (pollData[0].name_verfy){
+                if (serialized[0].value !== ''){
+                    return verifyInputRequirements();
+                } else {
+                    console.log('Server check failed, please input name');
+                }
             } else {
-                console.error('failed to input name ', pollData[0].name_verfy, serialized[0].value );
+                return verifyInputRequirements();
             }
+            
         };
 
         function verifyInputRequirements(){

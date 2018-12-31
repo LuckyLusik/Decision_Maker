@@ -168,11 +168,14 @@ $(document).ready(function() {
       const remove = shortUrl.shift();
       const voterNameText = voteValue[serialized[0].voter-name];
       let checkedName = true //new
-
-      if (document.getElementById("voter-name").value === "") {
-        $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
-        $("input").addClass("redd");
-        checkedName = false; //new
+      console.log ("This output is: ", $('#reqName').attr('data-nameReq'))
+      if ($('#reqName').attr('data-nameReq') === 'true'){
+        if (document.getElementById("voter-name").value === "") {
+          $("#check-rank-form").append(`<p class="rank-ch">Please, enter your name!</p>`);
+          $("input").addClass("redd");
+          checkedName = false; //new
+          console.log("inside name Req check, failed and turned red")
+        }
       }
       for (let z = 1; z <= numChoices.length; z++) {
         for (let x = 1; x <= numChoices.length; x++) {
@@ -197,7 +200,7 @@ $(document).ready(function() {
         shortUrl,
         },
         success: (data) => {
-          console.log(data)
+          console.log("Inside Ajax", data)
           renderOnSuccess(data[0], data[1])
         }
       })
