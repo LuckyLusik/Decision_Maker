@@ -53,14 +53,14 @@ module.exports = (sharedFunctions, knex) => {
             text: `Decision Maker has created your ${body.pollTitle} poll. The link to your admin page is : localhost:8080/pa/${urlString}. Please share the poll link: localhost:8080/vl/${urlString}. `, // plain text body
             html: 
             `<div class="top">
-            <img src="/images/logo.png" class="logo">
+            <img src="https://i.imgur.com/G2UhBNi.png" class="logo">
             <h1>Decision Maker</h1>
             </div>
             <body> 
             Decision Maker has created your ${body.pollTitle} poll. 
-            <br> The link to your admin page is : <a href="localhost:8080/pa/${urlString}">localhost:8080/pa/${urlString}</a>. 
             <br>
-            <br> Please share the poll link: <a href="localhost:8080/vl/${urlString}">localhost:8080/vl/${urlString}</a>.
+            <br> The link to your admin page is : <a href="http://localhost:8080/pa/${urlString}">localhost:8080/pa/${urlString}</a>. 
+            <br> Please share the poll link: <a href="http://localhost:8080/vl/${urlString}">localhost:8080/vl/${urlString}</a>.
             </body>` // html body
         };
 

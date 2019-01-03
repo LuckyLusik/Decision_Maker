@@ -153,10 +153,8 @@ $(document).ready(function() {
   // for voting page only
   $("#formData").on("submit", function(event) {
       event.preventDefault();
-      const numBlocks = document.getElementsByClassName("choice_rank")  
-      let allRatingsCompleted = false;
-      for (let j = 0; j <= numBlocks.length; j++) {
-        for (let i = 0; i <= numBlocks.length; i++) {
+      for (let j = 0; j <= numChoices.length; j++) {
+        for (let i = 0; i <= numChoices.length; i++) {
             $(`#ch${i}-star${j}`).removeAttr("disabled");
         } 
       }
@@ -189,8 +187,8 @@ $(document).ready(function() {
         if (checkedName === false || checkedChoice === false){
           $(".alert, .alert-danger").slideDown("slow");
         }
+        checkedChoice = false;
       }
-      checkedChoice = false;
       checkedName = true;
 
       $.ajax(

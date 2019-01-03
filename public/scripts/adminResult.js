@@ -116,11 +116,27 @@ function sliceSize(dataNum, dataTotal) {
         let choicesResultArray = sortChoicesResult(choicesTotals); // Array in array. Largest value will be in position 0, [[key0, value0],[key1,value1], ... ]
         renderString = "";
         console.log("Inside renderResultPage: ", dataObject, choicesResultArray);
-        resultsTitleDescriptionTime(pollCreatorData, pollData, choiceData, choicesResultArray);
+        let winnersString = winners(choicesResultArray);
+        resultsTitleDescriptionTime(pollCreatorData, pollData, choiceData, winnersString);
         resultsPieChart(choiceData, choicesResultArray);
         choiceUserName(voterNameData);
         $(".main_descrip").append(renderString) //
         createPie(".pieID.legend", ".pieID.pie");
+    }
+
+    function winners(choicesResultArray){
+      let winnerString = "";
+      let winnerValue = 0;
+      for (let each in choicesResultArray){
+        console.log("Winner Each: ", choicesResultArray[each])
+        if (choicesResultArray[each][1] >= winnerValue) {
+          winnerString += `${choicesResultArray[each][0]}, `;
+          winnerValue = choicesResultArray[each][1];
+          console.log("Winners Function: ", winnerValue, winnerString)
+        }
+      }
+      console.log("winner string: ", winnerString)
+      return winnerString.slice(0,-2);
     }
 
     function resultsTitleDescriptionTime(pollCreator, poll, choice, winner){
@@ -144,7 +160,7 @@ function sliceSize(dataNum, dataTotal) {
         </div>
         <div class="leader">
         <h2>Leader: </h2>
-        <h2>${winner[0][0]}</h2>
+        <h2>${winner}</h2>
         </div>
         </div>
         <ul class="pieID legend">
