@@ -1,29 +1,45 @@
-# Node Skeleton
-
-## Project Setup
-
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+# Decision Maker
+Decision Maker is a simple web tool to help to make a decision via a quick shareable poll. Once the poll questions and poll close time is completed in the form, you will receive an email with poll access information you can share with anyone you want to poll.
 
 ## Getting Started
 
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
-7. Run the server: `npm run local`
-8. Visit `http://localhost:8080/`
+1. Install dependencies (using the npm install command).
+2. Run the web server by using the npm run local.
+3. Connect to the server through localhost:8080.
 
 ## Dependencies
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+- Body-Parser: ^1.15.2,
+- dotenv: ^2.0.0,
+- ejs: ^2.4.1,
+- Express: ^4.13.4,
+- Knex: ^0.11.10,
+- Knex-logger: ^0.1.0,
+- Moment: ^2.23.0,
+- Morgan: ^1.7.0,
+- Node-Sass-Middleware: ^0.11.0,
+- Nodemailer: ^4.7.0,
+- PostgresSQL: ^6.4.2,
+- Randomstring: ^1.1.5
+- Nodemon: ^1.9.2
+
+## Final Product
+
+On connection: 
+
+![On connection](landing_page.png)
+
+
+You need to fill out the form in order to create a poll. You can add and remove new choices. After submition you have a link to a voting page.
+
+![Poll page](poll_full.gif)
+
+
+You have to make a decision and rank those choices. So it means you cannot give the same amount of stars to different choices. Before submiting your votes you can change your mind and clear your ranking.
+
+![Voting page](voting_can.gif)
+
+
+After submiting your votes you can see the results of the poll:
+
+![Voting page](results_full.gif)
